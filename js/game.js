@@ -1,12 +1,20 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let game_music = document.createElement("audio");
 
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard); 
+    // playGameMusic();
 }
 
+function playGameMusic() {
+    game_music.src = './audio/music.mp3';
+    game_music.autoplay = true; 
+    game_music.loop = true; 
+    console.log(game_music);
+}
 
 window.addEventListener('keydown', (event) => {
     if (event.keyCode == 39) {

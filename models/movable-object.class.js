@@ -3,8 +3,14 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0; //Geschwindigkeit
     acceleration = 2.5; //Beschleunigung
-    energy = 100; //Prozent
+    hpCharacter = 10;
     lastHit = 0;
+    collidingOffset = {
+        'top': 0,
+        'right': 0,
+        'bottom': 0,
+        'left': 0,
+    }
 
     moveRight() {
         this.position_x += this.speed;
@@ -21,20 +27,62 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     };
 
+    playJumpAnimation(images) {
+        // console.log(this.speedY)   
+        if(this.speedY <= 30 && this.speedY > 20) {
+            this.jumpingImage(images[0])
+        }
+        else if(this.speedY <= 20 && this.speedY > 10) {
+            this.jumpingImage(images[1])
+        }
+        else if(this.speedY <= 10 && this.speedY > 0) {
+            this.jumpingImage(images[2])
+        }
+        else if(this.speedY <= 0 && this.speedY > -7.5) {
+            this.jumpingImage(images[3])
+        }
+        else if(this.speedY <= -7.5 && this.speedY > -15) {
+            this.jumpingImage(images[4])
+        }
+        else if(this.speedY <= -15 && this.speedY > -22.5) {
+            this.jumpingImage(images[5])
+        }
+        else if(this.speedY <= -22.5 && this.speedY > -30) {
+            this.jumpingImage(images[6])
+        }
+        else if(this.speedY < -30) {
+            this.jumpingImage(images[7])
+        }
+    };
+
+    jumpingImage(image) {
+        this.img = this.imageCache[image];   
+    }
+
     applyGravity() {
-        setInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0) {
-                this.position_y -= this.speedY;
-                this.speedY -= this.acceleration;
-            }
-        }, 1000 / 25);
+        try {
+            setInterval(() => {
+                if (this.isAboveGround() || this.speedY > 0) {
+                    this.position_y -= this.speedY;
+                    this.speedY -= this.acceleration;
+                    // console.log('nach: pos y = ', this.position_y, 'speedy = ', this.speedY, 'Beschleunigung: ', this.acceleration)
+                }
+            }, 1000 / 25);   
+        } catch (error) {
+            console.log('Fehler')
+        }
     }
 
     isAboveGround() {
         if (this instanceof ThrowableObject) { //Throwable object should always fall
-            return true
+            // without this condition the object doesn´t stop falling
+            if(this.position_y > 500) {
+                return false
+            } else {
+                return true
+            }
         } else {
-            return this.position_y < 180;
+            return this.position_y < 150;
         }
     }
 
@@ -42,37 +90,37 @@ class MovableObject extends DrawableObject {
         this.speedY = 30;
     }
 
-    // character.isColliding(chicken) --> check if chicken is colliding with character
-    // isColliding(obj) {
-    //     return (this.position_x + this.width) >= obj.position_x && this.position_x <= (obj.position_x + obj.width) &&
-    //         (this.position_y + this.offsetY + this.height) >= obj.position_y &&
-    //         (this.position_y + this.offsetY) <= (obj.position_y + obj.height) 
-    //         // obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
-    // }
-
-    isColliding(mo) {
-        return this.position_x + this.width > mo.position_x &&
-            this.position_y + this.height > mo.position_y &&
-            this.position_x < mo.position_x &&
-            this.position_y < mo.position_y + mo.height
+    isColliding(obj) {
+        return (this.position_x + this.width - this.collidingOffset.right) >= obj.position_x 
+        && (this.position_y + this.height - this.collidingOffset.bottom) >= obj.position_y
+        && (this.position_x + this.collidingOffset.left) <= (obj.position_x + obj.width) 
+        && (this.position_y + this.collidingOffset.top) <= (obj.position_y + obj.height) 
+            // obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
     }
 
-    hit() {
-        this.energy -= 5;
-        if (this.energy < 0) {
-            this.energy = 0;
+     hit() {
+        this.hpCharacter -= 1;
+        if (this.hpCharacter < 0) {
+            this.hpCharacter = 0;
         } else {
             this.lastHit = new Date().getTime();
         }
     }
 
     isDead() {
-        return this.energy == 0;
+        return this.hpCharacter == 0;
     }
 
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; // Diff in ms
         timepassed = timepassed / 1000 // Diff in sec
-        return timepassed < 1 //true if we were hit in the last 5 seconds
+        return timepassed < 0.5 
+    }
+
+    deadChicken(enemy, i, arr){
+        console.log((this.position_y + this.height - this.collidingOffset.bottom),enemy.position_y )
+        if((this.position_y + this.height - this.collidingOffset.bottom) == enemy.position_y) {
+            console.log('test')
+        }
     }
 }

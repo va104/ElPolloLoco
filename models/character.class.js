@@ -1,8 +1,14 @@
 class Character extends MovableObject {
     width = 170;
     height = 280;
-    position_y = 80;
+    position_y = 150;
     speed = 10;
+    collidingOffset = {
+        'top': 120,
+        'right': 30,
+        'bottom': 40,
+        'left': 30,
+    }
     IMAGES_IDLE = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',
@@ -37,8 +43,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/2_walk/W-26.png',
     ];
     IMAGES_JUMPING = [
-        'img/2_character_pepe/3_jump/J-31.png',
-        'img/2_character_pepe/3_jump/J-32.png',
+
         'img/2_character_pepe/3_jump/J-33.png',
         'img/2_character_pepe/3_jump/J-34.png',
         'img/2_character_pepe/3_jump/J-35.png',
@@ -62,7 +67,10 @@ class Character extends MovableObject {
         'img/2_character_pepe/4_hurt/H-43.png'
     ];
     world;
-    walking_sound = new Audio('./audio/walking.mp3')
+    walking_sound = new Audio('./audio/walking.mp3');
+    jumping_sound = new Audio('./audio/jump.mp3');
+    hurting_sound = new Audio ('./audio/hurt.mp3');
+    dying_sound = new Audio ('./audio/dying.mp3'); 
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -70,6 +78,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_IDLE);
 
         this.animate();
         this.applyGravity();
@@ -78,6 +87,7 @@ class Character extends MovableObject {
     animate() {
         setInterval(() => {
             this.walking_sound.pause();
+            // this.jumping_sound.pause();
             if (this.world.keyboard.RIGHT && this.position_x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
@@ -92,22 +102,45 @@ class Character extends MovableObject {
 
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
+                this.jumping_sound.play();
             }
 
             this.world.camera_x = -this.position_x + 100;
         }, 1000 / 60);
 
+        // Different images for dead, hurt, juming, walking 
+
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD)
+                this.dying_sound.play();
             } else if (this.isHurt()) {
+                this.hurting_sound.play();
                 this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround()) {
                 // walk animation 
                 this.playAnimation(this.IMAGES_WALKING)
-            }
+            } 
         }, 50);
+
+        setInterval(() => {
+            if (this.isAboveGround()) {
+                this.playJumpAnimation(this.IMAGES_JUMPING);
+            }
+        }, 180);
+
+        setInterval(() => {
+            if (this.noKeyboardButtonSelected() && !this.isAboveGround()) {
+                this.playAnimation(this.IMAGES_IDLE)
+            }
+        },130)
     }
-} 
+
+    noKeyboardButtonSelected(){
+        return (!this.world.keyboard.RIGHT &&
+        !this.world.keyboard.LEFT &&
+        !this.world.keyboard.UP &&
+        !this.world.keyboard.DOWN &&
+        !this.world.keyboard.SPACE)
+    }
+}  

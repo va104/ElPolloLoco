@@ -5,6 +5,7 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5; //Beschleunigung
     hpCharacter = 10;
     lastHit = 0;
+    chickenisDead = false;
     collidingOffset = {
         'top': 0,
         'right': 0,
@@ -29,34 +30,34 @@ class MovableObject extends DrawableObject {
 
     playJumpAnimation(images) {
         // console.log(this.speedY)   
-        if(this.speedY <= 30 && this.speedY > 20) {
+        if (this.speedY <= 30 && this.speedY > 20) {
             this.jumpingImage(images[0])
         }
-        else if(this.speedY <= 20 && this.speedY > 10) {
+        else if (this.speedY <= 20 && this.speedY > 10) {
             this.jumpingImage(images[1])
         }
-        else if(this.speedY <= 10 && this.speedY > 0) {
+        else if (this.speedY <= 10 && this.speedY > 0) {
             this.jumpingImage(images[2])
         }
-        else if(this.speedY <= 0 && this.speedY > -7.5) {
+        else if (this.speedY <= 0 && this.speedY > -7.5) {
             this.jumpingImage(images[3])
         }
-        else if(this.speedY <= -7.5 && this.speedY > -15) {
+        else if (this.speedY <= -7.5 && this.speedY > -15) {
             this.jumpingImage(images[4])
         }
-        else if(this.speedY <= -15 && this.speedY > -22.5) {
+        else if (this.speedY <= -15 && this.speedY > -22.5) {
             this.jumpingImage(images[5])
         }
-        else if(this.speedY <= -22.5 && this.speedY > -30) {
+        else if (this.speedY <= -22.5 && this.speedY > -30) {
             this.jumpingImage(images[6])
         }
-        else if(this.speedY < -30) {
+        else if (this.speedY < -30) {
             this.jumpingImage(images[7])
         }
     };
 
     jumpingImage(image) {
-        this.img = this.imageCache[image];   
+        this.img = this.imageCache[image];
     }
 
     applyGravity() {
@@ -67,16 +68,16 @@ class MovableObject extends DrawableObject {
                     this.speedY -= this.acceleration;
                     // console.log('nach: pos y = ', this.position_y, 'speedy = ', this.speedY, 'Beschleunigung: ', this.acceleration)
                 }
-            }, 1000 / 25);   
+            }, 1000 / 25);
         } catch (error) {
             console.log('Fehler')
         }
     }
 
     isAboveGround() {
-        if (this instanceof ThrowableObject) { //Throwable object should always fall
+        if (this instanceof ThrowableObject || this instanceof Chicken) { //Throwable object should always fall
             // without this condition the object doesn´t stop falling
-            if(this.position_y > 500) {
+            if (this.position_y > 500) {
                 return false
             } else {
                 return true
@@ -91,15 +92,15 @@ class MovableObject extends DrawableObject {
     }
 
     isColliding(obj) {
-        return (this.position_x + this.width - this.collidingOffset.right) >= obj.position_x 
-        && (this.position_y + this.height - this.collidingOffset.bottom) >= obj.position_y
-        && (this.position_x + this.collidingOffset.left) <= (obj.position_x + obj.width) 
-        && (this.position_y + this.collidingOffset.top) <= (obj.position_y + obj.height) 
-            // obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+        return (this.position_x + this.width - this.collidingOffset.right) >= obj.position_x
+            && (this.position_y + this.height - this.collidingOffset.bottom) >= obj.position_y
+            && (this.position_x + this.collidingOffset.left) <= (obj.position_x + obj.width)
+            && (this.position_y + this.collidingOffset.top) <= (obj.position_y + obj.height)
+        // obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
     }
 
-     hit() {
-        this.hpCharacter -= 1;
+    hit() {
+        this.hpCharacter -= 0.1;
         if (this.hpCharacter < 0) {
             this.hpCharacter = 0;
         } else {
@@ -114,13 +115,19 @@ class MovableObject extends DrawableObject {
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; // Diff in ms
         timepassed = timepassed / 1000 // Diff in sec
-        return timepassed < 0.5 
+        return timepassed < 0.5
     }
 
-    deadChicken(enemy, i, arr){
-        console.log((this.position_y + this.height - this.collidingOffset.bottom),enemy.position_y )
-        if((this.position_y + this.height - this.collidingOffset.bottom) == enemy.position_y) {
-            console.log('test')
-        }
+    jumpOnChicken(obj, i, arr) {
+        return (this.position_x + this.width - this.collidingOffset.right) >= obj.position_x
+            // && (this.position_y + this.height - this.collidingOffset.bottom) >= obj.position_y
+            && (this.position_x + this.collidingOffset.left) <= (obj.position_x + obj.width)
+            && (this.position_y + this.collidingOffset.top) <= (obj.position_y + obj.height)
+            && ((this.position_y + this.height - this.collidingOffset.bottom) >= obj.position_y - 10
+            && (this.position_y + this.height - this.collidingOffset.bottom) <= obj.position_y + 10)
+            && this.speedY < 0 // otherwise Pepe kills the chicken while he is hit an jumps in the air
+
+        // arr.splice(i, 1);
     }
+
 }

@@ -1,5 +1,5 @@
-class Chicken extends MovableObject{
-    position_y = 350;
+class Chicken extends MovableObject {
+    position_y = 340;
     width = 60;
     height = 90;
     IMAGES_WALKING_NORMAL = [
@@ -9,10 +9,11 @@ class Chicken extends MovableObject{
     ];
     IMAGES_DEAD_NORMAL = [
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png',
+        'img/3_enemies_chicken/chicken_normal/2_dead/dead.png',
     ];
 
 
-    
+
     constructor() {
         // super() is just needed for methods but nut for properties
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
@@ -27,11 +28,19 @@ class Chicken extends MovableObject{
 
     animate() {
         setInterval(() => {
-            this.moveLeft();
+            if (!this.chickenisDead) {
+                this.moveLeft();
+            }
         }, 1000 / 60);
-        
+
         setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING_NORMAL);
+            if (!this.chickenisDead) {
+                this.playAnimation(this.IMAGES_WALKING_NORMAL);
+            } else {
+                this.playAnimation(this.IMAGES_DEAD_NORMAL);
+                this.applyGravity();
+            }
         }, 100);
     }
 }
+

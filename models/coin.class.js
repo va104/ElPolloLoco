@@ -32,7 +32,7 @@ class Coin extends MovableObject {
         this.coins_collect_sound.play();
         arr.splice(i, 1);
         world.statusBarCoin.countCoins++;
-        console.log(world.statusBarCoin.countCoins)
+        // console.log(world.statusBarCoin.countCoins)
         // 5 coins == 1HP+
         if(world.statusBarCoin.countCoins == 5){
             world.statusBarHealth.countHP++;

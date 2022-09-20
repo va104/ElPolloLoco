@@ -20,7 +20,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
-        
+
         this.font.load().then(function (loadedFace) {
             document.fonts.add(loadedFace);
             //do something after the font is loaded
@@ -42,30 +42,33 @@ class World {
         }, 150);
 
         setInterval(() => {
-            this.checkCollisionTopOfChicken()
-        }, 10);
-
-        setInterval(() => {
             this.checkCollisionsEnemys();
-        }, 300);
+        }, 1000/60);
+
+        // setInterval(() => {
+        //     this.checkIfChickenisDead();
+        // }, 1000/60);
     }
 
-    checkCollisionTopOfChicken(){
-        this.level.enemies.forEach((enemy, i, arr) => {
-            this.character.deadChicken(enemy, i, arr);
-        });
-    }
+
+    // checkIfChickenisDead() {
+    //     this.level.enemies.forEach((enemy, i, arr) => {
+    //         this.character.jumpOnChicken(enemy, i, arr)
+    //     })
+    // }
 
     checkCollisionsEnemys() {
         this.level.enemies.forEach(enemy => {
-            if (this.character.isColliding(enemy)) {
+            if (this.character.jumpOnChicken(enemy)) {
+                enemy.chickenisDead = true;
+            } else if (!enemy.chickenisDead && this.character.isColliding(enemy)) {
                 this.character.hit();
-                this.statusBarHealth.countHP--;
-                if(this.statusBarHealth.countHP <= 0){
+                this.statusBarHealth.countHP -= 1;
+                if (this.statusBarHealth.countHP <= 0) {
                     this.statusBarHealth.countHP = 0;
                 }
             }
-        });
+        })
     }
 
     checkCollisions() {
@@ -80,7 +83,7 @@ class World {
                 coins.collectCoins(i, arr);
             }
         });
-    } 
+    }
 
     checkThrowObjects() {
         if (this.keyboard.D && (this.statusBarBottle.countBottles > 0)) {

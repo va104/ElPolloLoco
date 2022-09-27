@@ -5,10 +5,20 @@ class ThrowableObject extends MovableObject {
      'img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png',
      'img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png'
     ];
+    IMAGES_BOTTLE_SPLASH = [
+        'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png',  
+        'img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png',  
+        'img/6_salsa_bottle/bottle_rotation/bottle_splash/3_bottle_splash.png',  
+        'img/6_salsa_bottle/bottle_rotation/bottle_splash/4_bottle_splash.png',  
+        'img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png',  
+        'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png',  
+    ];
+    throwing_sound = new Audio ('./audio/throw.mp3')
 
     constructor(x, y) {
         super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
         this.loadImages(this.IMAGES_ROTATION);
+        this.loadImages(this.IMAGES_BOTTLE_SPLASH)
         this.position_x = x;
         this.position_y = y;
         this.height = 60;
@@ -18,16 +28,18 @@ class ThrowableObject extends MovableObject {
     }
 
     throw() {
-        this.speedY = 30;
-        this.applyGravity();
-        setInterval(() => {
-            this.position_x += 10;
-        }, 25);
+        this.throwing_sound.play();
+        this.speedY = 15;
+        this.applyGravity()
     }
     
     animate() {
         setInterval(() => {
-            this.playAnimation(this.IMAGES_ROTATION)
+            if(!this.chickenisDead) {
+                this.playAnimation(this.IMAGES_ROTATION)
+            } else {
+                this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
+            }
         }, 100);
     }
 }

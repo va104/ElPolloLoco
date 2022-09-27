@@ -43,25 +43,18 @@ class World {
 
         setInterval(() => {
             this.checkCollisionsEnemys();
-        }, 1000/60);
-
-        // setInterval(() => {
-        //     this.checkIfChickenisDead();
-        // }, 1000/60);
+        }, 1000 / 60);
     }
 
 
-    // checkIfChickenisDead() {
-    //     this.level.enemies.forEach((enemy, i, arr) => {
-    //         this.character.jumpOnChicken(enemy, i, arr)
-    //     })
-    // }
-
     checkCollisionsEnemys() {
-        this.level.enemies.forEach(enemy => {
+        this.level.enemies.forEach((enemy, i, arr) => {
             if (this.character.jumpOnChicken(enemy)) {
                 enemy.chickenisDead = true;
-            } else if (!enemy.chickenisDead && this.character.isColliding(enemy)) {
+                enemy.hitChicken.play();
+            } else if (enemy.position_y > 500) {
+                enemy.deleteObject(i, arr);
+            } else if (!enemy.chickenisDead && this.character.isColliding(enemy) && !this.character.isHurt()) {
                 this.character.hit();
                 this.statusBarHealth.countHP -= 1;
                 if (this.statusBarHealth.countHP <= 0) {
@@ -90,7 +83,27 @@ class World {
             let bottle = new ThrowableObject(this.character.position_x + 100, this.character.position_y + 100);
             this.throwableObjects.push(bottle);
             this.statusBarBottle.countBottles--;
+            this.checkCollisionBottleEnemy(bottle);
         }
+    }
+
+    checkCollisionBottleEnemy(bottle) {
+        let indexOfThrownBottle = this.throwableObjects.length - 1;
+        let test = setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                // enemy.hitChicken.pause();
+                if (bottle.isColliding(enemy)) {
+                    enemy.chickenisDead = true;
+                    bottle.chickenisDead = true;
+                    enemy.hitChicken.play();
+                    //delete bottle after the animation of splashing
+                    setTimeout(() => {
+                        bottle.deleteObject(indexOfThrownBottle, this.throwableObjects);
+                        clearInterval(test);
+                    }, 600);
+                }
+            });
+        } , 1000 / 60);
     }
 
     draw() {

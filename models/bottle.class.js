@@ -3,8 +3,7 @@ class Bottle extends MovableObject{
     height = 70;
     width = 60;
     offset = 0;
-    bottle_collect_sound = new Audio('./audio/bottles.mp3')
-
+    bottle_collect_sound = new Audio('./audio/bottles.mp3');
     constructor(offset, image, x){
         super().loadImage(image);
         this.position_x = (Math.random() * 100) + x;

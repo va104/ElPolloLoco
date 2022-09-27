@@ -2,6 +2,17 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let game_music = document.createElement("audio");
+let intervalIds = [];
+let isEndbossReached = false;
+
+// function setStoppapleInterval(fn, time){
+//     let id = setInterval(fn, time);
+//     intervalIds.push(id);
+// }
+
+function clearAllIntervals() {
+    intervalIds.forEach(clearInterval)
+  }
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -13,7 +24,6 @@ function playGameMusic() {
     game_music.src = './audio/music.mp3';
     game_music.autoplay = true; 
     game_music.loop = true; 
-    console.log(game_music);
 }
 
 window.addEventListener('keydown', (event) => {

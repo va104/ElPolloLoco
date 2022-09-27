@@ -69,8 +69,8 @@ class Character extends MovableObject {
     world;
     walking_sound = new Audio('./audio/walking.mp3');
     jumping_sound = new Audio('./audio/jump.mp3');
-    hurting_sound = new Audio ('./audio/hurt.mp3');
-    dying_sound = new Audio ('./audio/dying.mp3'); 
+    hurting_sound = new Audio('./audio/hurt.mp3');
+    dying_sound = new Audio('./audio/dying.mp3');
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -82,30 +82,45 @@ class Character extends MovableObject {
 
         this.animate();
         this.applyGravity();
+        this.checkIfEndbossIsReached();
     };
+
+    checkIfEndbossIsReached() {
+        let endbossAnimationInterval =
+            setInterval(() => {
+                if (this.position_x >= 700) {
+                    isEndbossReached = true;
+                    console.log('reached')
+                    //interval should stop if endboss is reached
+                    clearInterval(endbossAnimationInterval);
+                }
+            }, 1000 / 60
+            )
+    }
 
     animate() {
         setInterval(() => {
-            this.walking_sound.pause();
-            // this.jumping_sound.pause();
-            if (this.world.keyboard.RIGHT && this.position_x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false;
-                this.walking_sound.play();
-            }
+            if (!isEndbossReached) {
+                this.walking_sound.pause();
+                if (this.world.keyboard.RIGHT && this.position_x < this.world.level.level_end_x) {
+                    this.moveRight();
+                    this.otherDirection = false;
+                    this.walking_sound.play();
+                }
 
-            if (this.world.keyboard.LEFT && this.position_x > 0) {
-                this.moveLeft();
-                this.otherDirection = true;
-                this.walking_sound.play();
-            }
+                if (this.world.keyboard.LEFT && this.position_x > 0) {
+                    this.moveLeft();
+                    this.otherDirection = true;
+                    this.walking_sound.play();
+                }
 
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-                this.jump();
-                this.jumping_sound.play();
-            }
+                if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+                    this.jump();
+                    this.jumping_sound.play();
+                }
 
-            this.world.camera_x = -this.position_x + 100;
+                this.world.camera_x = -this.position_x + 100;
+            }
         }, 1000 / 60);
 
         // Different images for dead, hurt, juming, walking 
@@ -120,7 +135,7 @@ class Character extends MovableObject {
             } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround()) {
                 // walk animation 
                 this.playAnimation(this.IMAGES_WALKING)
-            } 
+            }
         }, 50);
 
         setInterval(() => {
@@ -133,14 +148,14 @@ class Character extends MovableObject {
             if (this.noKeyboardButtonSelected() && !this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_IDLE)
             }
-        },130)
+        }, 130)
     }
 
-    noKeyboardButtonSelected(){
+    noKeyboardButtonSelected() {
         return (!this.world.keyboard.RIGHT &&
-        !this.world.keyboard.LEFT &&
-        !this.world.keyboard.UP &&
-        !this.world.keyboard.DOWN &&
-        !this.world.keyboard.SPACE)
+            !this.world.keyboard.LEFT &&
+            !this.world.keyboard.UP &&
+            !this.world.keyboard.DOWN &&
+            !this.world.keyboard.SPACE)
     }
 }  

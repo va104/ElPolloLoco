@@ -11,14 +11,13 @@ class Chicken extends MovableObject {
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png',
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png',
     ];
-
-
+    hitChicken = new Audio('./audio/chicken.mp3');
 
     constructor() {
         // super() is just needed for methods but nut for properties
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
 
-        this.position_x = 200 + Math.random() * 500 // Number between 200 and 700;
+        this.position_x = 500 + Math.random() * 500 // Number between 200 and 700;
         this.speed = 0.15 + Math.random() * 0.25
 
         this.loadImages(this.IMAGES_WALKING_NORMAL);

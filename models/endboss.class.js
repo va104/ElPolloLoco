@@ -2,6 +2,7 @@ class Endboss extends MovableObject {
     height = 400;
     width = 250;
     position_y = -460;
+    game_music_endboss = document.createElement("audio");
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
         'img/4_enemie_boss_chicken/2_alert/G6.png',
@@ -12,6 +13,12 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/2_alert/G11.png',
         'img/4_enemie_boss_chicken/2_alert/G12.png',
     ];
+    collidingOffset = {
+        'top': 140,
+        'right': 40,
+        'bottom': 80,
+        'left': 60,
+    };
     hitChicken = new Audio('./audio/hit_endboss.mp3');
     endboss_spawning_sound = new Audio ('./audio/spawn_endboss.mp3')
 
@@ -38,11 +45,17 @@ class Endboss extends MovableObject {
                 this.endboss_spawning_sound.play();
                 if(this.position_y > 60) {
                     isEndbossReached = false;
-                    clearInterval(endbossAnimationInterval);
+                    clearInterval(endbossAnimationInterval); 
+                    this.EndbossMusic();
                 }
             }
         }, 200);
+    }
 
+    EndbossMusic() {
+        this.game_music_endboss.src = './audio/music_fast.mp3';
+        this.game_music_endboss.autoplay = true; 
+        this.game_music_endboss.loop = true; 
     }
     
 }

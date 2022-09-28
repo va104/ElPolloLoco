@@ -90,7 +90,7 @@ class Character extends MovableObject {
             setInterval(() => {
                 if (this.position_x >= 700) {
                     isEndbossReached = true;
-                    console.log('reached')
+                    game_music.pause();
                     //interval should stop if endboss is reached
                     clearInterval(endbossAnimationInterval);
                 }

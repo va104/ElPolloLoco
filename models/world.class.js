@@ -91,8 +91,7 @@ class World {
         let indexOfThrownBottle = this.throwableObjects.length - 1;
         let test = setInterval(() => {
             this.level.enemies.forEach((enemy) => {
-                // enemy.hitChicken.pause();
-                if (bottle.isColliding(enemy)) {
+                if (bottle.isColliding(enemy) && enemy instanceof Chicken) {
                     enemy.chickenisDead = true;
                     bottle.chickenisDead = true;
                     enemy.hitChicken.play();
@@ -102,9 +101,21 @@ class World {
                         clearInterval(test);
                     }, 600);
                 }
-            });
-        } , 1000 / 60);
+                else if (bottle.isColliding(enemy) && enemy instanceof Endboss) {
+                    bottle.chickenisDead = true;
+                    enemy.hitChicken.play();
+                    //delete bottle after the animation of splashing
+                    setTimeout(() => {
+                        bottle.deleteObject(indexOfThrownBottle, this.throwableObjects);
+                        clearInterval(test);
+                    }, 600);
+                }
+            })
+
+            ;
+        }, 100);
     }
+
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);

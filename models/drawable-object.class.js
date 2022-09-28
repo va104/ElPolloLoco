@@ -39,14 +39,14 @@ class DrawableObject {
             // || this instanceof Chicken 
             || this instanceof Bottle
             || this instanceof Coin
+            || this instanceof Endboss
+            || this instanceof Chicken
         ) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'blue';
             ctx.rect(this.position_x, this.position_y, this.width, this.height);
             ctx.stroke();
-
-
 
             ctx.beginPath();
             ctx.lineWidth = '5';
@@ -60,6 +60,14 @@ class DrawableObject {
                 );
             }
             if (this instanceof Coin || this instanceof Bottle) {
+                ctx.rect(
+                    this.position_x + this.collidingOffset.left,
+                    this.position_y + this.collidingOffset.top,
+                    this.width - (this.collidingOffset.right * 2),
+                    this.height - (this.collidingOffset.bottom * 2)
+                );
+            }
+            if (this instanceof Endboss) {
                 ctx.rect(
                     this.position_x + this.collidingOffset.left,
                     this.position_y + this.collidingOffset.top,

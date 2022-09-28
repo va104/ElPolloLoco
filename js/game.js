@@ -17,7 +17,7 @@ function clearAllIntervals() {
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard); 
-    // playGameMusic();
+    playGameMusic();
 }
 
 function playGameMusic() {

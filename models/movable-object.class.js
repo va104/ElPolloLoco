@@ -3,7 +3,7 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0; //Geschwindigkeit
     acceleration = 2.5; //Beschleunigung
-    hpCharacter = 10;
+    hpObject = 5;
     lastHit = 0;
     chickenisDead = false;
     collidingOffset = {
@@ -109,16 +109,16 @@ class MovableObject extends DrawableObject {
     }
 
     hit() {
-        this.hpCharacter -= 1;
-        if (this.hpCharacter < 0) {
-            this.hpCharacter = 0;
+        this.hpObject -= 1;
+        if (this.hpObject < 0) {
+            this.hpObject = 0;
         } else {
             this.lastHit = new Date().getTime();
         }
     }
 
     isDead() {
-        return this.hpCharacter == 0;
+        return this.hpObject == 0;
     }
 
     isHurt() {

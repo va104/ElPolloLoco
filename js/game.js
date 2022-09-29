@@ -4,6 +4,7 @@ let keyboard = new Keyboard();
 let game_music = document.createElement("audio");
 let intervalIds = [];
 let isEndbossReached = false;
+let endbossStatusBar = false;
 
 // function setStoppapleInterval(fn, time){
 //     let id = setInterval(fn, time);
@@ -17,7 +18,7 @@ function clearAllIntervals() {
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard); 
-    playGameMusic();
+    // playGameMusic();
 }
 
 function playGameMusic() {

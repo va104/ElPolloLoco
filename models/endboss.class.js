@@ -13,6 +13,12 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/2_alert/G11.png',
         'img/4_enemie_boss_chicken/2_alert/G12.png',
     ];
+    IMAGES_HURT = [
+        'img/4_enemie_boss_chicken/4_hurt/G21.png',
+        'img/4_enemie_boss_chicken/4_hurt/G22.png',
+        'img/4_enemie_boss_chicken/4_hurt/G23.png',
+
+    ];
     collidingOffset = {
         'top': 140,
         'right': 40,
@@ -23,8 +29,8 @@ class Endboss extends MovableObject {
     endboss_spawning_sound = new Audio ('./audio/spawn_endboss.mp3')
 
     constructor() {
-        super().loadImage(this.IMAGES_WALKING[0]);
-        this.loadImages(this.IMAGES_WALKING);
+        super().loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_HURT);
         this.position_x = 1000;
         this.animate();
         this.endbossAnimation();
@@ -33,7 +39,11 @@ class Endboss extends MovableObject {
 
     animate() {
         setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING);
+            if(this.isHurt()){
+                this.playAnimation(this.IMAGES_HURT);
+            } else{
+                this.playAnimation(this.IMAGES_WALKING);
+            }
         }, 200);
     }
 
@@ -44,9 +54,11 @@ class Endboss extends MovableObject {
                 this.applyGravity();
                 this.endboss_spawning_sound.play();
                 if(this.position_y > 60) {
-                    isEndbossReached = false;
+                    isEndbossReached = false; //so that the character can move again
+                    endbossStatusBar = true; //used in world for endboss healthBar
                     clearInterval(endbossAnimationInterval); 
-                    this.EndbossMusic();
+                    // this.test();
+                    // this.EndbossMusic();
                 }
             }
         }, 200);
@@ -58,4 +70,10 @@ class Endboss extends MovableObject {
         this.game_music_endboss.loop = true; 
     }
     
+    //hier kommen später die Laufattacken rein
+    // test(){
+    //     setInterval(() => {
+    //         console.log('Enemy reached')
+    //     }, 100);
+    // }
 }

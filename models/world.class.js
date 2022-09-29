@@ -8,6 +8,7 @@ class World {
     statusBarHealth = new StatusBarHealth();
     statusBarCoin = new StatusBarCoin();
     statusBarBottle = new StatusBarBottle();
+    statusBarEndboss = new StatusBarEndboss();
     throwableObjects = [];
 
     font = new FontFace('ranchers', 'url(fonts/ranchers-regular.ttf)');
@@ -101,9 +102,14 @@ class World {
                         clearInterval(test);
                     }, 600);
                 }
-                else if (bottle.isColliding(enemy) && enemy instanceof Endboss) {
+                else if (bottle.isColliding(enemy) && enemy instanceof Endboss && !enemy.isHurt()) {
+                    enemy.hit();
                     bottle.chickenisDead = true;
                     enemy.hitChicken.play();
+                    this.statusBarEndboss.countHP -= 1;
+                    if (this.statusBarEndboss.countHP <= 0) {
+                        this.statusBarEndboss.countHP = 0;
+                    }
                     //delete bottle after the animation of splashing
                     setTimeout(() => {
                         bottle.deleteObject(indexOfThrownBottle, this.throwableObjects);
@@ -134,6 +140,10 @@ class World {
         this.ctx.fillText(this.statusBarHealth.countHP, 90, 55);
         this.ctx.fillText(this.statusBarCoin.countCoins, 200, 55);
         this.ctx.fillText(this.statusBarBottle.countBottles, 305, 55);
+        if(endbossStatusBar){
+            this.addToMap(this.statusBarEndboss);
+            this.ctx.fillText(this.statusBarEndboss.countHP, 600, 70);
+        }
         this.ctx.translate(this.camera_x, 0); // Forwards
 
 

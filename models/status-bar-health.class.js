@@ -1,5 +1,5 @@
 class StatusBarHealth extends StaticObject{
-    countHP = 10;
+    countHP = 5;
 
     constructor() {
         super().loadImage('img/7_statusbars/3_icons/icon_health.png');

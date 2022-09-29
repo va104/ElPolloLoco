@@ -37,6 +37,7 @@ class Coin extends MovableObject {
         if(world.statusBarCoin.countCoins == 5){
             world.statusBarHealth.countHP++;
             this.newHP_sound.play();
+            world.character.hpObject++;
             world.statusBarCoin.countCoins = 0
         }
     }

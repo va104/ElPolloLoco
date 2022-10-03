@@ -34,16 +34,15 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-19.png',
         'img/2_character_pepe/1_idle/long_idle/I-20.png',
     ];
-    IMAGES_WALKING = [
-        'img/2_character_pepe/2_walk/W-21.png',
-        'img/2_character_pepe/2_walk/W-22.png',
-        'img/2_character_pepe/2_walk/W-23.png',
-        'img/2_character_pepe/2_walk/W-24.png',
-        'img/2_character_pepe/2_walk/W-25.png',
-        'img/2_character_pepe/2_walk/W-26.png',
-    ];
+    // IMAGES_WALKING = [
+    //     'img/2_character_pepe/2_walk/W-21.png',
+    //     'img/2_character_pepe/2_walk/W-22.png',
+    //     'img/2_character_pepe/2_walk/W-23.png',
+    //     'img/2_character_pepe/2_walk/W-24.png',
+    //     'img/2_character_pepe/2_walk/W-25.png',
+    //     'img/2_character_pepe/2_walk/W-26.png',
+    // ];
     IMAGES_JUMPING = [
-
         'img/2_character_pepe/3_jump/J-33.png',
         'img/2_character_pepe/3_jump/J-34.png',
         'img/2_character_pepe/3_jump/J-35.png',
@@ -74,7 +73,7 @@ class Character extends MovableObject {
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
-        this.loadImages(this.IMAGES_WALKING);
+        // this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
@@ -134,7 +133,7 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_HURT);
             } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround()) {
                 // walk animation 
-                this.playAnimation(this.IMAGES_WALKING)
+                this.playAnimation(characterImagesCache)
             }
         }, 50);
 

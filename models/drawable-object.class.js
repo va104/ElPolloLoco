@@ -12,16 +12,6 @@ class DrawableObject {
         this.img = new Image(); // this.img = document.getElementByID('image') <img id="image" src>
         this.img.src = path
     }
-
-    draw(ctx) {
-        try {
-            ctx.drawImage(this.img, this.position_x, this.position_y, this.width, this.height);
-        } catch (error) {
-            console.warn('Error loading image', error);
-            console.log('Could not load', this)
-        }
-    }
-
     /**
      * 
      * @param {Array} arr - ['img/image1.png, 'img/image2.png', ...]
@@ -33,6 +23,16 @@ class DrawableObject {
             this.imageCache[path] = img;
         })
     }
+
+    draw(ctx) {
+        try {
+            ctx.drawImage(this.img, this.position_x, this.position_y, this.width, this.height);
+        } catch (error) {
+            console.warn('Error loading image', error);
+            console.log('Could not load', this)
+        }
+    }
+
 
     drawFrame(ctx) {
         if (this instanceof Character

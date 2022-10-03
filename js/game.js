@@ -12,10 +12,12 @@ let endbossStatusBar = false;
 // }
 
 function clearAllIntervals() {
-    intervalIds.forEach(clearInterval)
+    for (let i = 1; i < 9999; i++) 
+    window.clearInterval(i);
   }
 
 function init() {
+    loadImages();
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard); 
     // playGameMusic();

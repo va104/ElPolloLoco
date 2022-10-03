@@ -36,6 +36,11 @@ class World {
         this.character.world = this;
     }
 
+    init() {
+        
+        console.log('test')
+    }
+
     run() {
         setInterval(() => {
             this.checkCollisions();

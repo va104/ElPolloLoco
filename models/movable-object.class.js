@@ -28,6 +28,13 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     };
 
+    playAnimationPreLoadImages(images) {
+        let i = this.currentImage % images.length;
+        let path = images[i];
+        this.img = this.imageCache[path];
+        this.currentImage++;
+    };
+
     playJumpAnimation(images) {
         // console.log(this.speedY)   
         if (this.speedY <= 30 && this.speedY > 20) {

@@ -1,3 +1,100 @@
+// Bottle
+let bottleImagesCache = {};
+let allBottleImages = [
+    bottleImages = [
+        'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
+        'img/6_salsa_bottle/2_salsa_bottle_on_ground.png',      
+    ]    
+];
+
+// Background Images
+let backgroundImagesCache = {};
+let allBackgroundImages = [
+    backgroundImages = [
+        'img/5_background/layers/air.png',
+        'img/5_background/layers/1_first_layer/1.png',
+        'img/5_background/layers/1_first_layer/2.png',
+        'img/5_background/layers/2_second_layer/1.png',
+        'img/5_background/layers/2_second_layer/2.png',
+        'img/5_background/layers/3_third_layer/1.png',
+        'img/5_background/layers/3_third_layer/2.png',
+    ]
+];
+
+// Chicken
+let chickenImagesCache = {};
+let allImagesChicken = [
+    chickenNormalImagesWalking = [
+        'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
+        'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
+        'img/3_enemies_chicken/chicken_normal/1_walk/3_w.png',
+    ],
+    chickenNormalImagesDead = [
+        'img/3_enemies_chicken/chicken_normal/2_dead/dead.png',
+        'img/3_enemies_chicken/chicken_normal/2_dead/dead.png',
+    ],
+]
+
+// Cloud
+let cloudImagesCache = {};
+let allCloudImages = [
+    cloudImage = [
+        'img/5_background/layers/4_clouds/1.png',
+        'img/5_background/layers/4_clouds/2.png'
+    ]
+];
+
+// Coin
+let coinImagesCache = {};
+let allImagesCoins = [
+    coinImages = [
+        'img/8_coin/coin_1.png',
+        'img/8_coin/coin_2.png',      
+    ]
+];
+
+// Endboss
+let endbossImagesCache = {};
+let allEndbossImages = [
+    endbossImagesWalking = [
+        'img/4_enemie_boss_chicken/1_walk/G1.png',
+        'img/4_enemie_boss_chicken/1_walk/G2.png',
+        'img/4_enemie_boss_chicken/1_walk/G3.png',
+        'img/4_enemie_boss_chicken/1_walk/G4.png',
+    ],
+    endbossImagesAlert = [
+        'img/4_enemie_boss_chicken/2_alert/G5.png',
+        'img/4_enemie_boss_chicken/2_alert/G6.png',
+        'img/4_enemie_boss_chicken/2_alert/G7.png',
+        'img/4_enemie_boss_chicken/2_alert/G8.png',
+        'img/4_enemie_boss_chicken/2_alert/G9.png',
+        'img/4_enemie_boss_chicken/2_alert/G10.png',
+        'img/4_enemie_boss_chicken/2_alert/G11.png',
+        'img/4_enemie_boss_chicken/2_alert/G12.png',
+    ],
+    endbossImagesAttack = [
+        'img/4_enemie_boss_chicken/3_attack/G13.png',
+        'img/4_enemie_boss_chicken/3_attack/G14.png',
+        'img/4_enemie_boss_chicken/3_attack/G15.png',
+        'img/4_enemie_boss_chicken/3_attack/G16.png',
+        'img/4_enemie_boss_chicken/3_attack/G17.png',
+        'img/4_enemie_boss_chicken/3_attack/G18.png',
+        'img/4_enemie_boss_chicken/3_attack/G19.png',
+        'img/4_enemie_boss_chicken/3_attack/G20.png',
+    ],
+    endbossImagesHurt = [
+        'img/4_enemie_boss_chicken/4_hurt/G21.png',
+        'img/4_enemie_boss_chicken/4_hurt/G22.png',
+        'img/4_enemie_boss_chicken/4_hurt/G23.png',
+    ],
+    endbossImagesDead = [
+        'img/4_enemie_boss_chicken/5_dead/G24.png',
+        'img/4_enemie_boss_chicken/5_dead/G25.png',
+        'img/4_enemie_boss_chicken/5_dead/G26.png',
+    ]   
+];
+
+// Character
 let characterImagesCache = {};
 let allImagesCharacter = [
     characterImagesIdle = [
@@ -58,12 +155,36 @@ let allImagesCharacter = [
     ]
 ]
 
-
+// all Objects for iterating into image cache 
 let allSources = [
     {
         'allArrays': allImagesCharacter,
         'imageCache': characterImagesCache,
-    }
+    },
+    {
+        'allArrays': allImagesChicken,
+        'imageCache': chickenImagesCache,
+    },
+    {
+        'allArrays': allImagesCoins,
+        'imageCache': coinImagesCache,
+    },
+    {
+        'allArrays': allBottleImages,
+        'imageCache': bottleImagesCache,
+    },
+    {
+        'allArrays': allCloudImages,
+        'imageCache': cloudImagesCache,
+    },
+    {
+        'allArrays': allEndbossImages,
+        'imageCache': endbossImagesCache,
+    },
+    {
+        'allArrays': allBackgroundImages,
+        'imageCache': backgroundImagesCache,
+    },
 ]
 
 

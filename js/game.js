@@ -18,9 +18,14 @@ function clearAllIntervals() {
 
 function init() {
     loadImages();
+    // loadAudio(); 
+}
+
+function startGame() {
     canvas = document.getElementById('canvas');
+    initLevel1();
     world = new World(canvas, keyboard); 
-    // playGameMusic();
+    playGameMusic();
 }
 
 function playGameMusic() {

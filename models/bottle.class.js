@@ -5,28 +5,28 @@ class Bottle extends MovableObject{
     offset = 0;
     bottle_collect_sound = new Audio('./audio/bottles.mp3');
     constructor(offset, image, x){
-        super().loadImage(image);
+        super(); 
+        this.img = image; 
         this.position_x = (Math.random() * 100) + x;
         this.offset = offset;
-        this.setCollidingOffsetBottle();
+        this.setBottleOffset();
     }
 
-    setCollidingOffsetBottle(){
+    setBottleOffset(){
         if(this.offset == 1){
-            this.collidingOffset = {
-                'top': 10,
-                'right': 10,
-                'bottom': 10,
-                'left': 20,
-            }
+            this.setCollidingOffsetBottle(10, 10, 10, 20);
         }
         if(this.offset == 2){
-            this.collidingOffset = {
-                'top': 10,
-                'right': 10,
-                'bottom': 10,
-                'left': 10,
-            }
+            this.setCollidingOffsetBottle(10, 10, 10, 10)
+        }
+    }
+
+    setCollidingOffsetBottle(top, right, bottom, left) {
+        this.collidingOffset = {
+            'top': top,
+            'right': right,
+            'bottom': bottom,
+            'left': left,
         }
     }
 

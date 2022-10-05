@@ -16,7 +16,8 @@ class Character extends MovableObject {
     dying_sound = new Audio('./audio/dying.mp3');
 
     constructor() {
-        super().loadImage('img/2_character_pepe/2_walk/W-21.png');
+        super()
+        this.img = characterImagesCache['img/2_character_pepe/1_idle/idle/I-1.png'];
         this.imageCache = characterImagesCache;
         this.animate();
         this.applyGravity();

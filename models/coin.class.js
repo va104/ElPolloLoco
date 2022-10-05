@@ -1,10 +1,6 @@
 class Coin extends MovableObject {
     height = 130;
     width = 130;
-    IMAGES_COIN = [
-        'img/8_coin/coin_1.png',
-        'img/8_coin/coin_2.png',
-    ];
     collidingOffset = {
         'top': 40,
         'right': 40,
@@ -15,8 +11,9 @@ class Coin extends MovableObject {
     newHP_sound = new Audio ('./audio/heartbeat.mp3')
 
     constructor() {
-        super().loadImage('img/8_coin/coin_1.png');
-        this.loadImages(this.IMAGES_COIN);
+        super();
+        this.img = coinImagesCache['img/8_coin/coin_1.png'];
+        this.imageCache = coinImagesCache;
         this.position_x = (Math.random() * 2000);
         this.position_y = (Math.random() * 60);
         this.animate();
@@ -24,7 +21,7 @@ class Coin extends MovableObject {
 
     animate() {
         setInterval(() => {
-            this.playAnimation(this.IMAGES_COIN);
+            this.playAnimation(coinImages);
         }, 350);
     }
 

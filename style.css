@@ -3,12 +3,16 @@
     src: url('fonts/ranchers-regular.ttf') format('truetype')
 }  
 
-body {
+body, html{
     display: flex;
     align-items: center;
     flex-direction: column;
     margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
     font-family: 'ranchers', Arial, Helvetica, sans-serif;
+    color: rgb(42, 45, 49);
 }
 
 h1{
@@ -17,13 +21,13 @@ h1{
     text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
-.wrapper{
-    position: relative; 
+.gameScreen, .startScreen{
+    position: absolute; 
     height: 100vh;
     width: 100%;
 }
 
-.wrapper::before {    
+.gameScreen::before {    
     content: "";
     background-image: url('img/10_background/desert.jpg');
     background-position: top;
@@ -51,4 +55,284 @@ canvas {
     right: 0px;
     bottom: 0px;
     left: 0px;
+}
+
+.startScreen{
+    background-color: rgb(42, 45, 49);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.ease-in {
+    animation: grow 2s ease-in;
+    transform: scale(3);
+  }
+  
+  @keyframes grow {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(3);
+    }
+  }
+
+.d-none{
+    display: none !important;
+}
+
+main {
+    height: 100%;
+    width: 100%;
+}
+
+aside {
+    background: linear-gradient( to bottom, rgba(0,0,0, 0), rgba(0,0,0, 0.4) ),url(./img/5_background/first_half_background.png);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 20%;
+    z-index: 1;
+}
+
+section {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+label {
+    display: inline-block;
+    padding: 7px 10px;
+    background-color: transparent;
+    cursor: pointer;
+    margin: 10px;
+    z-index: 3;
+    position: fixed;
+}
+
+.bar {
+    display: block;
+    background-color: #25A7CD;
+    width: 30px;
+    height: 3px;
+    border-radius: 5px;
+    margin: 5px auto;
+    transition: background-color .5s ease-in, transform .5s ease-in, width .5s ease-in;
+}
+
+.content {
+    z-index: 2;
+    transition: transform .5s ease-in-out;
+}
+
+.asideList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 100px;
+    text-align: center;
+    border-top: 2px solid rgba(255, 255, 255, .7);
+}
+
+.asideAnchor {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid rgba(255, 255, 255, .7);
+    padding: 20px 0;
+    letter-spacing: 7px;
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 500;
+    height: 65px;
+    position: relative;
+    transition: all .3s .15s ease-in;
+    cursor: pointer;
+}
+
+.asideAnchor:hover::before {
+    content: "";
+    margin-left: -20px;
+    margin-right: 20px;
+    background-image: url('./img/6_salsa_bottle/bottle_rotation/2_bottle_rotation-removebg.png');
+    background-size: 65px 65px;
+    display: inline-block;
+    width: 65px;
+    height: 65px;
+    /* background: no-repeat; */
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"]:checked~.content {
+    transform: translateX(20%);
+}
+
+input[type="checkbox"]:checked~label .bar {
+    background-color: #fff;
+}
+
+input[type="checkbox"]:checked~label .top {
+    -webkit-transform: translateY(0px) rotateZ(45deg);
+    -moz-transform: translateY(0px) rotateZ(45deg);
+    -ms-transform: translateY(0px) rotateZ(45deg);
+    -o-transform: translateY(0px) rotateZ(45deg);
+    transform: translateY(0px) rotateZ(45deg);
+}
+
+input[type="checkbox"]:checked~label .bottom {
+    -webkit-transform: translateY(-15px) rotateZ(-45deg);
+    -moz-transform: translateY(-15px) rotateZ(-45deg);
+    -ms-transform: translateY(-15px) rotateZ(-45deg);
+    -o-transform: translateY(-15px) rotateZ(-45deg);
+    transform: translateY(-15px) rotateZ(-45deg);
+}
+
+input[type="checkbox"]:checked~label .middle {
+    width: 0;
+}
+
+.middle {
+    margin: 0 auto;
+}
+
+.wrapperStartScreen{
+    background-image: url('./img/5_background/layers/air.png');
+    background-position: 50% 75%;
+    background-repeat: no-repeat;
+    height: 70%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.wrapperStartScreen img{
+    height: 100%;
+    object-fit: contain;
+    transition: all 0.2s ease-in-out;
+}
+
+.wrapperStartScreen>img:hover{
+    transform: scale(0.95);
+    cursor: pointer;
+}
+
+.menu-wrapper{
+    background-color: rgb(42, 45, 49, 0.7);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    z-index: 10;
+}
+
+.menu{
+    width: clamp(250px, 80%, 650px);
+    border-radius: 5px;
+    height: 500px;
+    background-color: rgb(181, 140, 49);
+    box-shadow: 6px -4px 11px rgb(255 255 255 / 19%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu>img{
+    width: 30px;
+    height: 30px;
+}
+
+.closeMenue{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.closeMenue:hover{
+    transform: scale(1.05);
+}
+
+.menu>div img{
+    width: 50px;
+    height: 50px;   
+}
+
+.menu>div p{
+    font-size: 2rem;
+    margin: 0 !important;
+    letter-spacing: 6px;
+}
+
+.menu>div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%;
+    height: 100%;
+}
+
+.menu span {
+    color: #EFD4A5 !important;
+    padding-right: 10px;
+}
+
+.growmenu {
+    animation: growMenu 0.5s ease-in;
+  }
+  
+  @keyframes growMenu {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+  }
+
+.marginRight{
+    margin-right: 30px;
+}
+
+.screenMode p:first-child{
+    margin-bottom: 14px !important;
+}
+
+.screenOn{
+    color: #EFD4A5;
+}
+
+.screenOff{
+    color: #3335368f;
+}
+
+.opacity{
+    opacity: 0.5;    
+}
+
+.cursor{
+    cursor: pointer;
+}
+
+@media (max-width: 1150px) {
+    .wrapperStartScreen img{
+        width: 100%;  
+        height: unset;
+    }
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,20 +29,86 @@
     <script src="./models/endboss.class.js"></script>
     <script src="./levels/level1.js"></script>
 </head>
+
 <body onload="init()">
-    <div class="wrapper">
-
+    <div class="gameScreen">
     </div>
-     <div class="game">
-
+    <div class="game">
         <h1>El pollo loco</h1>
-        
         <canvas id="canvas" width="720px" height="480px">
-            
         </canvas>
-        <div >
-            <button onclick="startGame()">start</button>
+    </div>
+    <main id="startScreen">
+        <aside>
+            <ul class="asideList">
+                <li onclick="showMenu('controlWrapper', 'controlChild')" class="asideAnchor">Controls</li>
+                <li onclick="showMenu('settingsWrapper', 'settingsChild')" class="asideAnchor">Settings</li>
+                <li onclick="showMenu()" class="asideAnchor">Imprint</li>
+            </ul>
+        </aside>
+        <section>
+            <input type="checkbox" id="myInput">
+            <label id="bar" for="myInput">
+                <span class="bar top"></span>
+                <span class="bar middle"></span>
+                <span class="bar bottom"></span>
+            </label>
+            <div class="content startScreen">
+                <div class="wrapperStartScreen">
+                    <img onclick="startGame()" id="coverImage" src="./img/9_intro_outro_screens/start/startscreen_1.png"
+                        alt="">
+                </div>
+            </div>
+        </section>
+    </main>
+    <div id="controlWrapper" class="menu-wrapper d-none">
+        <div id="controlChild" class="menu d-none">
+            <img class="closeMenue" onclick="closeMenu('controlWrapper')" src="./img/11_icons/close-window-64.png"
+                alt="">
+            <h1>Control</h1>
+            <div>
+                <p>Move Left</p>
+                <img src="./img/11_icons/left-round-64.png" alt="">
+            </div>
+            <div>
+                <p>Move Right</p>
+                <img src="./img/11_icons/right-round-64.png" alt="">
+            </div>
+            <div>
+                <p>Jump</p>
+                <img src="./img/11_icons/myspace-5-64.png" alt="">
+            </div>
+            <div>
+                <p>Throw Bottle</p>
+                <p><span>D</span></p>
+            </div>
+        </div>
+    </div>
+    <div id="settingsWrapper" class="menu-wrapper d-none">
+        <div id="settingsChild" class="menu d-none">
+            <img class="closeMenue" onclick="closeMenu('settingsWrapper')" src="./img/11_icons/close-window-64.png"
+                alt="">
+            <h1>Settings</h1>
+            <div>
+                <p>Music</p>
+                <div>
+                    <img id="musicOn" onclick="changeMusic()" class="cursor marginRight" src="./img/11_icons/volume-up-4-64.png" alt="">
+                    <img id="musicOff" onclick="changeMusic()" class="cursor opacity" src="./img/11_icons/mute-2-64_off.png" alt="">
+                </div>
+            </div>
+            <div>
+                <p>Volume</p>
+                <p>Platzhalter</p>
+            </div>
+            <div>
+                <p>Screen</p>
+                <div class="screenMode">
+                    <p class="cursor screenOn">720 x 480</p>
+                    <p class="cursor screenOff">Fullscreen</p>
+                </div>
+            </div>
         </div>
     </div>
 </body>
+
 </html>

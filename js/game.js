@@ -12,9 +12,9 @@ let endbossStatusBar = false;
 // }
 
 function clearAllIntervals() {
-    for (let i = 1; i < 9999; i++) 
-    window.clearInterval(i);
-  }
+    for (let i = 1; i < 9999; i++)
+        window.clearInterval(i);
+}
 
 function init() {
     loadImages();
@@ -22,16 +22,71 @@ function init() {
 }
 
 function startGame() {
+    zoomInEffect();
     canvas = document.getElementById('canvas');
     initLevel1();
-    world = new World(canvas, keyboard); 
+    world = new World(canvas, keyboard);
     playGameMusic();
 }
 
+function showMenu(displayWrapper, child) {
+    closeBurgerMenu();
+    let wrapper = getDocumentID(displayWrapper);
+    let menu = getDocumentID(child);
+    menu.classList.remove('d-none');
+    wrapper.classList.remove('d-none');
+    menu.classList.add('growmenu');
+}
+
+function settings() {
+    closeBurgerMenu();
+};
+
+function imprint() {
+    closeBurgerMenu();
+};
+
+function closeMenu(menuID){
+    let closeDialog = getDocumentID(menuID);
+    closeDialog.classList.add('d-none');
+}
+
+function closeBurgerMenu() {
+    let menuSettings = getDocumentID('myInput');
+    menuSettings.checked = false;
+}
+
+function zoomInEffect() {
+    let image = getDocumentID('coverImage');
+    let startScreen = getDocumentID('startScreen');
+    let bar = getDocumentID('bar');
+    image.classList.add('ease-in');
+    bar.classList.add('d-none');
+    setTimeout(() => {
+        startScreen.classList.add('d-none');
+    }, 2000);
+}
+
+function getDocumentID(id) {
+    return document.getElementById(id);
+}
+
+function chngimg() {
+    var img = document.getElementById('imgplus').src; //= 'Images/Minus.gif';
+
+    if (img) {
+      document.getElementById('imgplus').src = 'Images/Minus.gif';
+    } else if (!img) {
+      document.getElementById('imgplus').src = 'Images/Plus.gif';
+      alert(img);
+    }
+
+  }
+
 function playGameMusic() {
     game_music.src = './audio/music.mp3';
-    game_music.autoplay = true; 
-    game_music.loop = true; 
+    game_music.autoplay = true;
+    game_music.loop = true;
 }
 
 window.addEventListener('keydown', (event) => {

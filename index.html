@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <title>El pollo loco</title>
     <script src="./js/loadImages.js"></script>
+    <script src="./js/audio.js"></script>
     <script src="./models/keyboard.class.js"></script>
     <script src="./js/game.js"></script>
     <script src="./models/world.class.js"></script>
@@ -43,7 +44,7 @@
             <ul class="asideList">
                 <li onclick="showMenu('controlWrapper', 'controlChild')" class="asideAnchor">Controls</li>
                 <li onclick="showMenu('settingsWrapper', 'settingsChild')" class="asideAnchor">Settings</li>
-                <li onclick="showMenu()" class="asideAnchor">Imprint</li>
+                <li onclick="showMenu('imprintWrapper', 'imprintChild')" class="asideAnchor">Imprint</li>
             </ul>
         </aside>
         <section>
@@ -92,21 +93,41 @@
             <div>
                 <p>Music</p>
                 <div>
-                    <img id="musicOn" onclick="changeMusic()" class="cursor marginRight" src="./img/11_icons/volume-up-4-64.png" alt="">
-                    <img id="musicOff" onclick="changeMusic()" class="cursor opacity" src="./img/11_icons/mute-2-64_off.png" alt="">
+                    <img id="musicOn" onclick="changeMusic('on')" class="cursor marginRight" src="./img/11_icons/volume-up-4-64.png" alt="">
+                    <img id="musicOff" onclick="changeMusic('off')" class="cursor opacity" src="./img/11_icons/mute-2-64_off.png" alt="">
                 </div>
             </div>
             <div>
                 <p>Volume</p>
-                <p>Platzhalter</p>
+                <p>  
+                    <input oninput="changeVolume(this.value)" type="range" id="volume" name="volume" min="0" max="100" value="100"></p>
             </div>
             <div>
                 <p>Screen</p>
                 <div class="screenMode">
-                    <p class="cursor screenOn">720 x 480</p>
-                    <p class="cursor screenOff">Fullscreen</p>
+                    <p id="smallScreen" onclick="changeScreen('small')" class="cursor screenOn">720 x 480</p>
+                    <p id="fullScreen" onclick="changeScreen('full')" class="cursor opacity">Fullscreen</p>
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="imprintWrapper" class="menu-wrapper d-none">
+        <div id="imprintChild" class="menu d-none">
+            <img class="closeMenue" onclick="closeMenu('imprintWrapper')" src="./img/11_icons/close-window-64.png"
+                alt="">
+            <h1>Imprint</h1>
+            <div class="imprint">
+                <div>
+                    <p>Vanessa Würdinger</p>
+                    <p>Flößaustraße 122</p>
+                    <p>90763 Fürth</p>
+                </div>
+                <div>
+                    <p>E-Mail: vanessa.wuerdinger@gmx.de</p>
+                    <p>Tel.: +49 171 5522270</p>
+                </div>
+            </div>
+
         </div>
     </div>
 </body>

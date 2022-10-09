@@ -1,10 +1,10 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-let game_music = document.createElement("audio");
 let intervalIds = [];
 let isEndbossReached = false;
 let endbossStatusBar = false;
+let gameMusicStatus = true;
 
 // function setStoppapleInterval(fn, time){
 //     let id = setInterval(fn, time);
@@ -18,7 +18,6 @@ function clearAllIntervals() {
 
 function init() {
     loadImages();
-    // loadAudio(); 
 }
 
 function startGame() {
@@ -29,6 +28,29 @@ function startGame() {
     playGameMusic();
 }
 
+function changeVolume(value){
+    let volumeRange = value;
+    audio.forEach(e => {
+        e.volume = volumeRange / 100;
+        console.log (game_music.volume)
+    });
+    if(!gameMusicStatus) {
+        game_music.volume = false;   
+    }
+}
+
+function changeMusic(status) {
+    if (status == 'on') {
+        imagesMusicOn();
+        game_music.volume = true;
+        gameMusicStatus = true;
+    } else {
+        imagesMusicOff();
+        game_music.volume = false;
+        gameMusicStatus = false;
+    }
+};
+
 function showMenu(displayWrapper, child) {
     closeBurgerMenu();
     let wrapper = getDocumentID(displayWrapper);
@@ -38,6 +60,37 @@ function showMenu(displayWrapper, child) {
     menu.classList.add('growmenu');
 }
 
+
+function imagesMusicOn() {
+    musicOff.classList.add('opacity');
+    musicOff.src = './img/11_icons/mute-2-64_off.png'
+    musicOn.src = './img/11_icons/volume-up-4-64.png';
+    musicOn.classList.remove('opacity');
+}
+
+function imagesMusicOff() {
+    musicOff.classList.remove('opacity');
+    musicOff.src = './img/11_icons/mute-2-64.png'
+    musicOn.src = './img/11_icons/volume-up-4-64_off.png';
+    musicOn.classList.add('opacity');
+}
+
+function changeScreen(screen) {
+    let smallScreen = getDocumentID('smallScreen');
+    let fullScreen = getDocumentID('fullScreen');
+    if (screen == 'small') {
+        smallScreen.classList.add('screenOn');
+        smallScreen.classList.remove('opacity');
+        fullScreen.classList.remove('screenOn');
+        fullScreen.classList.add('opacity');
+    } else {
+        smallScreen.classList.remove('screenOn');
+        smallScreen.classList.add('opacity');
+        fullScreen.classList.add('screenOn');
+        fullScreen.classList.remove('opacity');
+    }
+};
+
 function settings() {
     closeBurgerMenu();
 };
@@ -46,7 +99,7 @@ function imprint() {
     closeBurgerMenu();
 };
 
-function closeMenu(menuID){
+function closeMenu(menuID) {
     let closeDialog = getDocumentID(menuID);
     closeDialog.classList.add('d-none');
 }
@@ -67,6 +120,23 @@ function zoomInEffect() {
     }, 2000);
 }
 
+window.addEventListener('load', () => {
+    let closeControl = document.getElementById('controlWrapper');
+    let closeSetting = document.getElementById('settingsWrapper');
+    let closeImprint = document.getElementById('imprintWrapper');
+    document.onclick = function (e) {
+        if (e.target.id == 'controlWrapper') {
+            closeControl.classList.add('d-none')
+        }
+        if (e.target.id == 'settingsWrapper') {
+            closeSetting.classList.add('d-none')
+        }
+        if (e.target.id == 'imprintWrapper') {
+            closeImprint.classList.add('d-none')
+        }
+    }
+});
+
 function getDocumentID(id) {
     return document.getElementById(id);
 }
@@ -75,13 +145,13 @@ function chngimg() {
     var img = document.getElementById('imgplus').src; //= 'Images/Minus.gif';
 
     if (img) {
-      document.getElementById('imgplus').src = 'Images/Minus.gif';
+        document.getElementById('imgplus').src = 'Images/Minus.gif';
     } else if (!img) {
-      document.getElementById('imgplus').src = 'Images/Plus.gif';
-      alert(img);
+        document.getElementById('imgplus').src = 'Images/Plus.gif';
+        alert(img);
     }
 
-  }
+}
 
 function playGameMusic() {
     game_music.src = './audio/music.mp3';

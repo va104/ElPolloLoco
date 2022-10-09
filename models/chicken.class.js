@@ -2,7 +2,7 @@ class Chicken extends MovableObject {
     position_y = 340;
     width = 60;
     height = 90;
-    hitChicken = new Audio('./audio/chicken.mp3');
+    hitChicken = hitChicken;
 
     constructor() {
         // super() is just needed for methods but nut for properties

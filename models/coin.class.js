@@ -7,8 +7,8 @@ class Coin extends MovableObject {
         'bottom': 40,
         'left': 40,
     };
-    coins_collect_sound = new Audio('./audio/collect-coins.mp3');
-    newHP_sound = new Audio ('./audio/heartbeat.mp3')
+    coins_collect_sound = coins_collect_sound;
+    newHP_sound = newHP_sound;
 
     constructor() {
         super();

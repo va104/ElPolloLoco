@@ -2,15 +2,15 @@ class Endboss extends MovableObject {
     height = 400;
     width = 250;
     position_y = -460;
-    game_music_endboss = document.createElement("audio");
+    game_music_endboss = game_music;
     collidingOffset = {
         'top': 140,
         'right': 40,
         'bottom': 80,
         'left': 60,
     };
-    hitChicken = new Audio('./audio/hit_endboss.mp3');
-    endboss_spawning_sound = new Audio('./audio/spawn_endboss.mp3')
+    hitChicken = hitEndboss;
+    endboss_spawning_sound = endboss_spawning_sound;
 
     constructor() {
         super();

@@ -10,10 +10,10 @@ class Character extends MovableObject {
         'left': 30,
     }
     world;
-    walking_sound = new Audio('./audio/walking.mp3');
-    jumping_sound = new Audio('./audio/jump.mp3');
-    hurting_sound = new Audio('./audio/hurt.mp3');
-    dying_sound = new Audio('./audio/dying.mp3');
+    walking_sound = walking_sound;
+    jumping_sound = jumping_sound;
+    hurting_sound = hurting_sound;
+    dying_sound = dying_sound;
 
     constructor() {
         super()

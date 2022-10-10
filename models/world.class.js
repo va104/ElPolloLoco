@@ -31,14 +31,9 @@ class World {
         });
     }
 
-    // for accessing the character 
+    // for accessing the world in the character
     setWorld() {
         this.character.world = this;
-    }
-
-    init() {
-        
-        console.log('test')
     }
 
     run() {
@@ -85,7 +80,7 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D && (this.statusBarBottle.countBottles > 0)) {
+        if (this.keyboard.D && (this.statusBarBottle.countBottles > 0) && !pauseGame) {
             let bottle = new ThrowableObject(this.character.position_x + 100, this.character.position_y + 100);
             this.throwableObjects.push(bottle);
             this.statusBarBottle.countBottles--;
@@ -126,7 +121,6 @@ class World {
             ;
         }, 100);
     }
-
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);

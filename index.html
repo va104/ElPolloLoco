@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="./img/11_icons/favicon.svg" sizes="any">
+    <!-- <link rel="shortcut icon" href="./img/11_icons/favicon.ico"> -->
     <title>El pollo loco</title>
     <script src="./js/loadImages.js"></script>
     <script src="./js/audio.js"></script>
@@ -34,11 +36,46 @@
 <body onload="init()">
     <div class="gameScreen">
     </div>
-    <div class="game">
-        <h1>El pollo loco</h1>
-        <canvas id="canvas" width="720px" height="480px">
-        </canvas>
+    <div class="game" >
+        <div class="gameChild">
+            <div class="controlGame">
+                <div>
+                    <p>Move Left</p>
+                    <img src="./img/11_icons/left-round-64.png" alt="">
+                </div>
+                <div>
+                    <p>Move Right</p>
+                    <img src="./img/11_icons/right-round-64.png" alt="">
+                </div>
+                <div>
+                    <p>Jump</p>
+                    <img src="./img/11_icons/myspace-5-64.png" alt="">
+                </div>
+                <div>
+                    <p>Throw Bottle</p>
+                    <img src="./img/11_icons/d.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div id="fullscreen">
+            <canvas id="canvas" width="720px" height="480px">
+            </canvas>
+            <section class="canvasoverlay">
+                <div>
+                    <img id="pauseGame" onclick="pausePlayGame()" src="./img/11_icons/pause-64.png" alt="pause">
+                    <img id="muteGame" onclick="muteGame()" src="./img/11_icons/volume-up-4-64_white.png" alt="pause">
+                    <img id="fullscreenGame" onclick="fullscreenGame()" src="./img/11_icons/fullscreen-enter-64.png" alt="pause">
+                </div>
+            </section>
+            <img id="win" class="gameEnd d-none" src="./img/9_intro_outro_screens/game_over/game over!.png" alt="">
+            <img id="loose" class="gameEnd d-none" src="./img/9_intro_outro_screens/game_over/oh no you lost!.png" alt="">
+            <div id="afterGame" class="afterGame d-none">
+                <button onclick="reloadPage()">Back To Menu</button>
+                <button onclick="startnewGame()">Restart Game</button>
+            </div>
+        </div>
     </div>
+    <button onclick="startnewGame()" style="width: 100px; height: 100px; position: absolute; top: 0px"></button>
     <main id="startScreen">
         <aside>
             <ul class="asideList">
@@ -127,7 +164,6 @@
                     <p>Tel.: +49 171 5522270</p>
                 </div>
             </div>
-
         </div>
     </div>
 </body>

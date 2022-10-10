@@ -4,8 +4,8 @@ class ThrowableObject extends MovableObject {
 
     constructor(x, y) {
         super();
-        this.img = bottleImages['img/6_salsa_bottle/1_salsa_bottle_on_ground.png'];
         this.imageCache = bottleImagesCache;
+        this.img = bottleImagesCache['img/6_salsa_bottle/1_salsa_bottle_on_ground.png'];
         this.position_x = x;
         this.position_y = y;
         this.height = 60;
@@ -15,31 +15,37 @@ class ThrowableObject extends MovableObject {
     }
 
     throw() {
-        if(world.character.otherDirection){
-            //offset for throwing to the left side
-            this.position_x -= this.position_x_otherDirection;
+        if (!pauseGame) {    
+            if(world.character.otherDirection){
+                //offset for throwing to the left side
+                this.position_x -= this.position_x_otherDirection;
+            }
+            this.throwing_sound.play();
+            this.speedY = 15;
+            this.applyGravity()
         }
-        this.throwing_sound.play();
-        this.speedY = 15;
-        this.applyGravity()
     }
 
     animate() {
         setInterval(() => {
-            if (!this.chickenisDead) {
-                this.playAnimation(bottleImagesRotation)
-            } else {
-                this.playAnimation(bottleImagesSplash);
+            if (!pauseGame) {            
+                if (!this.chickenisDead) {
+                    this.playAnimation(bottleImagesRotation)
+                } else {
+                    this.playAnimation(bottleImagesSplash);
+                }
             }
         }, 100);
     }
 
     throwingDirection() {
-        if (world.character.otherDirection) {
-            this.position_x -= 14;
-        } else {
-            this.position_x += 14;
+        if (!pauseGame) {  
+            if (world.character.otherDirection) {
+                this.position_x -= 14;
+            } else {
+                this.position_x += 14;
+            }
+            return true
         }
-        return true
     }
 }

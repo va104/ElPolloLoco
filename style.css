@@ -6,10 +6,11 @@
 body, html{
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
     margin: 0;
     padding: 0;
-    height: 100%;
+    height: 100vh;
     width: 100%;
     font-family: 'ranchers', Arial, Helvetica, sans-serif;
     color: rgb(42, 45, 49);
@@ -31,30 +32,96 @@ h1{
     content: "";
     background-image: url('img/10_background/desert.jpg');
     background-position: top;
-      position: absolute;
-      top: 0px;
-      right: 0px;
-      bottom: 0px;
-      left: 0px;
-      opacity: 0.7;
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.7;
 }
 
 canvas {
     background-color: black;
-    border-style: solid;
-    border-color: white;
-    border-width: 10px 10px 150px 10px;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: block;
+}
+
+.gameChild{
+    width: 750px;
+    height: 600px;
+    position: absolute;
+    z-index: 0;
+    background: white;
+    top: -15px;
+    display: flex;
+    align-items: self-end;
+}
+
+.controlGame{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+    flex: 1;
+}
+
+.controlGame > div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;   
+}
+
+.controlGame p {
+    margin-bottom: 7px;
+    letter-spacing: 1px;
+}
+
+.controlGame img {
+    width: 40px;
+    height: 40px;
+}
+
+.canvasoverlay{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    background: transparent;
+    display: flex;
+    align-items: self-end;
+    justify-content: flex-end;
+}
+
+#fullscreen{
+    z-index: 0;
+}
+
+.gameEnd{
+    position: absolute;
+    max-width: 100%;
+    height: 100%;
+    top: 0;
+}
+
+.canvasoverlay img {
+    width: 25px;
+    height: 25px;
+    padding: 5px;
+    margin-right: 5px;
+    cursor: pointer;
 }
 
 .game{
     display: flex;
     align-items: center;
     flex-direction: column;
-    position: absolute;
-    top: 50px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
+    position: relative;
 }
 
 .startScreen{
@@ -86,6 +153,36 @@ canvas {
 main {
     height: 100%;
     width: 100%;
+    position: absolute;
+}
+
+.afterGame{
+    position: absolute;
+    top: 40px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.afterGame button {
+    padding: 15px;
+    margin: 20px;
+    font-family: inherit;
+    letter-spacing: 2px;
+    font-size: 1.5rem;
+    color: #362d2d;
+    background-color: rgb(255, 166, 0);
+    box-shadow: inset 1px 1px 15px #333;
+    border-radius: 3px;
+    border: none;
+    transition: all 0.2s ease-in-out;
+    z-index: 1;
+}
+
+.afterGame button:hover{
+    cursor: pointer;
+    box-shadow: inset 1px 1px 25px #333;
+    transform: scale(0.95);    
 }
 
 aside {
@@ -244,7 +341,7 @@ input[type="checkbox"]:checked~label .middle {
     width: clamp(250px, 80%, 650px);
     border-radius: 5px;
     height: 500px;
-    background-color: rgb(181, 140, 49);
+    background-color: #b47471;;
     box-shadow: 6px -4px 11px rgb(255 255 255 / 19%);
     position: relative;
     display: flex;

@@ -89,14 +89,7 @@ class MovableObject extends DrawableObject {
             }
         }
         if (this instanceof Endboss) {
-            if(this.isDead()){
-                setTimeout(() => {
-                    this.position_y = 1000;
-                    return true;
-                }, 1000);
-            } else {
-                return this.position_y < 60;
-            }
+            return this.position_y < 60;
         }
         else {
             return this.position_y < 150;

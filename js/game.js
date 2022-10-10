@@ -5,6 +5,9 @@ let intervalIds = [];
 let isEndbossReached = false;
 let endbossStatusBar = false;
 let gameMusicStatus = true;
+let rememberVolumeGameMusic = 1;
+let pauseGame = false;
+let fullscreen = false;
 
 // function setStoppapleInterval(fn, time){
 //     let id = setInterval(fn, time);
@@ -20,35 +23,80 @@ function init() {
     loadImages();
 }
 
+function startnewGame() {
+    canvas = document.getElementById('canvas');
+    initLevel1();
+    world = new World(canvas, keyboard);
+    game_music.volume = rememberVolumeGameMusic;
+    closeEndgameImages();
+    if (gameMusicStatus) {
+        playGameMusic();
+    }
+}
+
+function closeEndgameImages(){
+    let loose = getDocumentID('loose');
+    let afterGame = getDocumentID('afterGame'); 
+    let win = getDocumentID('win');
+    loose.classList.add('d-none');
+    afterGame.classList.add('d-none');
+    win.classList.add('d-none');
+}
+
 function startGame() {
     zoomInEffect();
     canvas = document.getElementById('canvas');
     initLevel1();
     world = new World(canvas, keyboard);
     playGameMusic();
+    checkFullScreenOption();
 }
 
-function changeVolume(value){
-    let volumeRange = value;
-    audio.forEach(e => {
-        e.volume = volumeRange / 100;
-        console.log (game_music.volume)
-    });
-    if(!gameMusicStatus) {
-        game_music.volume = false;   
+function pausePlayGame() {
+    let id = getDocumentID('pauseGame');
+    if (!pauseGame) {
+        id.src = './img/11_icons/play-3-64.png';
+    } else {
+        id.src = './img/11_icons/pause-64.png';
     }
+    pauseGame = !pauseGame;
+}
+
+function changeVolume(value) {
+    let volumeRange = value;
+    audio.forEach((e) => {
+        e.volume = volumeRange / 100;
+    });
+    //safe the number for mute button
+    rememberVolumeGameMusic = audio[0].volume;
+    if (!gameMusicStatus) {
+        game_music.volume = false;
+    }
+}
+
+function muteGame() {
+    let id = getDocumentID('muteGame');
+    if (gameMusicStatus) {
+        id.src = './img/11_icons/mute-2-64_white.png';
+        game_music.pause();
+        game_music.volume = !game_music.volume;
+    } else {
+        id.src = './img/11_icons/volume-up-4-64_white.png';
+        game_music.play();
+        game_music.volume = rememberVolumeGameMusic;
+    }
+    gameMusicStatus = !gameMusicStatus;
 }
 
 function changeMusic(status) {
     if (status == 'on') {
         imagesMusicOn();
-        game_music.volume = true;
-        gameMusicStatus = true;
+        game_music.volume = rememberVolumeGameMusic;
     } else {
         imagesMusicOff();
-        game_music.volume = false;
-        gameMusicStatus = false;
+        game_music.volume = !game_music.volume;
     }
+    gameMusicStatus = !gameMusicStatus;
 };
 
 function showMenu(displayWrapper, child) {
@@ -60,8 +108,9 @@ function showMenu(displayWrapper, child) {
     menu.classList.add('growmenu');
 }
 
-
 function imagesMusicOn() {
+    let play = getDocumentID('muteGame');
+    play.src = './img/11_icons/volume-up-4-64_white.png';
     musicOff.classList.add('opacity');
     musicOff.src = './img/11_icons/mute-2-64_off.png'
     musicOn.src = './img/11_icons/volume-up-4-64.png';
@@ -69,6 +118,8 @@ function imagesMusicOn() {
 }
 
 function imagesMusicOff() {
+    let pause = getDocumentID('muteGame');
+    pause.src = './img/11_icons/mute-2-64_white.png'
     musicOff.classList.remove('opacity');
     musicOff.src = './img/11_icons/mute-2-64.png'
     musicOn.src = './img/11_icons/volume-up-4-64_off.png';
@@ -76,18 +127,20 @@ function imagesMusicOff() {
 }
 
 function changeScreen(screen) {
-    let smallScreen = getDocumentID('smallScreen');
-    let fullScreen = getDocumentID('fullScreen');
+    let smallScr = getDocumentID('smallScreen');
+    let fullScr = getDocumentID('fullScreen');
     if (screen == 'small') {
-        smallScreen.classList.add('screenOn');
-        smallScreen.classList.remove('opacity');
-        fullScreen.classList.remove('screenOn');
-        fullScreen.classList.add('opacity');
+        smallScr.classList.add('screenOn');
+        smallScr.classList.remove('opacity');
+        fullScr.classList.remove('screenOn');
+        fullScr.classList.add('opacity');
+        fullscreen = false;
     } else {
-        smallScreen.classList.remove('screenOn');
-        smallScreen.classList.add('opacity');
-        fullScreen.classList.add('screenOn');
-        fullScreen.classList.remove('opacity');
+        smallScr.classList.remove('screenOn');
+        smallScr.classList.add('opacity');
+        fullScr.classList.add('screenOn');
+        fullScr.classList.remove('opacity');
+        fullscreen = true;
     }
 };
 
@@ -121,9 +174,9 @@ function zoomInEffect() {
 }
 
 window.addEventListener('load', () => {
-    let closeControl = document.getElementById('controlWrapper');
-    let closeSetting = document.getElementById('settingsWrapper');
-    let closeImprint = document.getElementById('imprintWrapper');
+    let closeControl = getDocumentID('controlWrapper');
+    let closeSetting = getDocumentID('settingsWrapper');
+    let closeImprint = getDocumentID('imprintWrapper');
     document.onclick = function (e) {
         if (e.target.id == 'controlWrapper') {
             closeControl.classList.add('d-none')
@@ -141,21 +194,57 @@ function getDocumentID(id) {
     return document.getElementById(id);
 }
 
-function chngimg() {
-    var img = document.getElementById('imgplus').src; //= 'Images/Minus.gif';
-
-    if (img) {
-        document.getElementById('imgplus').src = 'Images/Minus.gif';
-    } else if (!img) {
-        document.getElementById('imgplus').src = 'Images/Plus.gif';
-        alert(img);
+function checkFullScreenOption() {
+    let img = getDocumentID('fullscreenGame');
+    let idFullscreen = getDocumentID('fullscreen');
+    if (fullscreen) {
+        openFullscreen(idFullscreen);
+        img.src = './img/11_icons/fullscreen-exit-64.png';
     }
+}
 
+function fullscreenGame() {
+    let img = getDocumentID('fullscreenGame');
+    let idFullscreen = getDocumentID('fullscreen');
+    if (!fullscreen) {
+        openFullscreen(idFullscreen);
+        img.src = './img/11_icons/fullscreen-exit-64.png';
+    } else {
+        closeFullscreen();
+        img.src = './img/11_icons/fullscreen-enter-64.png';
+    }
+    fullscreen = !fullscreen;
+}
+
+function reloadPage() {
+    location.reload();
+    return false;
+}
+
+/* View in fullscreen */
+function openFullscreen(elem) {
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) { /* Safari */
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE11 */
+        elem.msRequestFullscreen();
+    }
+}
+
+/* Close fullscreen */
+function closeFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) { /* Safari */
+        document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { /* IE11 */
+        document.msExitFullscreen();
+    }
 }
 
 function playGameMusic() {
-    game_music.src = './audio/music.mp3';
-    game_music.autoplay = true;
+    game_music.play();
     game_music.loop = true;
 }
 

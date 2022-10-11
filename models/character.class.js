@@ -20,27 +20,26 @@ class Character extends MovableObject {
         this.checkIfEndbossIsReached();
     };
 
-    checkIfEndbossIsReached() {
-        let endbossAnimationInterval =
-            setInterval(() => {
-                if (this.position_x >= 700) {
-                    isEndbossReached = true;
-                    this.img = characterImagesCache['img/2_character_pepe/1_idle/idle/I-1.png']
-                    game_music.pause();
-                    //interval should stop if endboss is reached
-                    clearInterval(endbossAnimationInterval);
-                }
-            }, 1000 / 60
-            )
-    }
-
     animate() {
         this.runSkills();
         this.runAnimation();
     }
 
+    checkIfEndbossIsReached() {
+        const endbossAnimationInterval =
+            setInterval(() => {
+                if (this.position_x >= 700) {
+                    isEndbossReached = true;
+                    this.img = characterImagesCache['img/2_character_pepe/1_idle/idle/I-1.png'];
+                    game_music.pause();
+                    //interval should stop if endboss is reached
+                    clearInterval(endbossAnimationInterval);
+                }
+            }, 1000 / 60)
+    }
+
     runSkills() {
-        setInterval(() => {
+        setStoppapleInterval(() => {
             if (!pauseGame) {
                 // character can not move when endboss is showing up
                 if (!isEndbossReached) {
@@ -80,25 +79,18 @@ class Character extends MovableObject {
 
 
     runAnimation() {
-        setInterval(() => {
+        setStoppapleInterval(() => {
             if (!pauseGame) {
                 if (!isEndbossReached) {
-                    if (this.isDead()) {
-                        this.playAnimation(characterImagesDead)
-                        dying_sound.play();
-                        this.looseGame();
-                    } else if (this.isHurt()) {
-                        hurting_sound.play();
-                        this.playAnimation(characterImagesHurt);
-                    } else if (this.characterIsMoving() && !this.isAboveGround()) {
-                        // walk animation 
-                        this.playAnimation(characterImagesWalking)
-                    }
+                    // work like if else
+                    if (this.isDead()) return this.animationDead();
+                    if (this.isHurt()) return this.hurtAnimation();
+                    if (this.characterIsMoving() && !this.isAboveGround()) return this.walkAnimation();
                 }
             }
         }, 50);
 
-        setInterval(() => {
+        setStoppapleInterval(() => {
             if (!pauseGame) {
                 if (!isEndbossReached) {
                     if (this.isAboveGround()) {
@@ -108,7 +100,7 @@ class Character extends MovableObject {
             }
         }, 180);
 
-        setInterval(() => {
+        setStoppapleInterval(() => {
             if (!pauseGame) {
                 if (!isEndbossReached) {
                     if (this.noKeyboardButtonSelected() && !this.isAboveGround()) {
@@ -117,6 +109,21 @@ class Character extends MovableObject {
                 }
             }
         }, 130)
+    }
+
+    animationDead(){
+        this.playAnimation(characterImagesDead);
+        dying_sound.play();
+        this.looseGame();
+    }
+
+    hurtAnimation(){
+        hurting_sound.play();
+        this.playAnimation(characterImagesHurt);
+    }
+
+    walkAnimation(){
+        this.playAnimation(characterImagesWalking);
     }
 
     // Different images for dead, hurt, juming, walking 
@@ -150,7 +157,7 @@ class Character extends MovableObject {
             clearAllIntervals();
         }, 500)
     }
-    
+
     playJumpAnimation(images) {
         // console.log(this.speedY)   
         if (this.speedY <= 30 && this.speedY > 20) {

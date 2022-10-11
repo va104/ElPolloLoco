@@ -22,7 +22,7 @@ class Endboss extends MovableObject {
     }
 
     animate() {
-            setInterval(() => {
+        setStoppapleInterval(() => {
                 if (!pauseGame) {            
                     //for walking
                     if (this.isDead()) {

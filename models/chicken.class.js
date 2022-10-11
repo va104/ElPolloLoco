@@ -15,7 +15,7 @@ class Chicken extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
+        setStoppapleInterval(() => {
             if (!pauseGame) {
                 if (!this.chickenisDead) {
                     this.moveLeft();
@@ -23,7 +23,7 @@ class Chicken extends MovableObject {
             }
         }, 1000 / 60);
 
-        setInterval(() => {
+        setStoppapleInterval(() => {
             if (!pauseGame) {
                 if (!this.chickenisDead) {
                     this.playAnimation(chickenNormalImagesWalking);

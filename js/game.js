@@ -9,14 +9,19 @@ let rememberVolumeGameMusic = 1;
 let pauseGame = false;
 let fullscreen = false;
 
-// function setStoppapleInterval(fn, time){
-//     let id = setInterval(fn, time);
-//     intervalIds.push(id);
-// }
+function setStoppapleInterval(fn, time){
+    let id = setInterval(fn, time);
+    intervalIds.push(id);
+}
 
 function clearAllIntervals() {
-    for (let i = 1; i < 9999; i++)
-        window.clearInterval(i);
+    for (let i = 0; i < intervalIds.length; i++) {
+        const id = intervalIds[i];
+        clearInterval(id);
+        
+    }
+    intervalIds = [];
+    // intervalIds.forEach(clearInterval);
 }
 
 function init() {
@@ -24,6 +29,7 @@ function init() {
 }
 
 function startnewGame() {
+    clearAllIntervals();
     canvas = document.getElementById('canvas');
     initLevel1();
     world = new World(canvas, keyboard);

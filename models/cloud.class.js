@@ -12,7 +12,7 @@ class Cloud extends MovableObject{
     }
 
     animate(){
-        setInterval(() => {
+        setStoppapleInterval(() => {
             if (!pauseGame) {
                 this.moveLeft();
             }

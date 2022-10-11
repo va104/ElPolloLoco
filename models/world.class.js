@@ -37,12 +37,12 @@ class World {
     }
 
     run() {
-        setInterval(() => {
+        setStoppapleInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
         }, 150);
 
-        setInterval(() => {
+        setStoppapleInterval(() => {
             this.checkCollisionsEnemys();
         }, 1000 / 60);
     }
@@ -90,7 +90,7 @@ class World {
 
     checkCollisionBottleEnemy(bottle) {
         let indexOfThrownBottle = this.throwableObjects.length - 1;
-        let test = setInterval(() => {
+        let test = setStoppapleInterval(() => {
             this.level.enemies.forEach((enemy) => {
                 if (bottle.isColliding(enemy) && enemy instanceof Chicken) {
                     enemy.chickenisDead = true;

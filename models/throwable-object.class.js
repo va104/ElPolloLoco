@@ -27,7 +27,7 @@ class ThrowableObject extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
+        setStoppapleInterval(() => {
             if (!pauseGame) {            
                 if (!this.chickenisDead) {
                     this.playAnimation(bottleImagesRotation)

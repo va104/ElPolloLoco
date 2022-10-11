@@ -28,38 +28,6 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     };
 
-    playJumpAnimation(images) {
-        // console.log(this.speedY)   
-        if (this.speedY <= 30 && this.speedY > 20) {
-            this.jumpingImage(images[0])
-        }
-        else if (this.speedY <= 20 && this.speedY > 10) {
-            this.jumpingImage(images[1])
-        }
-        else if (this.speedY <= 10 && this.speedY > 0) {
-            this.jumpingImage(images[2])
-        }
-        else if (this.speedY <= 0 && this.speedY > -7.5) {
-            this.jumpingImage(images[3])
-        }
-        else if (this.speedY <= -7.5 && this.speedY > -15) {
-            this.jumpingImage(images[4])
-        }
-        else if (this.speedY <= -15 && this.speedY > -22.5) {
-            this.jumpingImage(images[5])
-        }
-        else if (this.speedY <= -22.5 && this.speedY > -30) {
-            this.jumpingImage(images[6])
-        }
-        else if (this.speedY < -30) {
-            this.jumpingImage(images[7])
-        }
-    };
-
-    jumpingImage(image) {
-        this.img = this.imageCache[image];
-    }
-
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {

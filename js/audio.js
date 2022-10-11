@@ -13,4 +13,4 @@ let audio = [
     throwing_sound = new Audio('./audio/throw.mp3'),
     win_sound = new Audio('./audio/win.mp3'),
     loose_sound = new Audio('./audio/loose.mp3'),
-]
+] 

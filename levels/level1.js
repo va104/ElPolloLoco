@@ -10,6 +10,9 @@ function initLevel1 () {
             new Chicken(),
             new Chicken(),
             new Chicken(),
+            // new smallChicken(1),
+            // new smallChicken(1.6),
+            // new smallChicken(3.5),
             new Endboss(),
         ],
         [

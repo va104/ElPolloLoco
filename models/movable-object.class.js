@@ -56,6 +56,9 @@ class MovableObject extends DrawableObject {
                 return this.throwingDirection();
             }
         }
+        if(this instanceof smallChicken) {
+            return this.position_y < 360;
+        }
         if (this instanceof Endboss) {
             return this.position_y < 60;
         }

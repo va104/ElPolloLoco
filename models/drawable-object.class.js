@@ -41,6 +41,7 @@ class DrawableObject {
             || this instanceof Coin
             || this instanceof Endboss
             || this instanceof Chicken
+            || this instanceof smallChicken
         ) {
             ctx.beginPath();
             ctx.lineWidth = '5';
@@ -59,15 +60,7 @@ class DrawableObject {
                     this.height - (this.collidingOffset.bottom * 3)
                 );
             }
-            if (this instanceof Coin || this instanceof Bottle) {
-                ctx.rect(
-                    this.position_x + this.collidingOffset.left,
-                    this.position_y + this.collidingOffset.top,
-                    this.width - (this.collidingOffset.right * 2),
-                    this.height - (this.collidingOffset.bottom * 2)
-                );
-            }
-            if (this instanceof Endboss) {
+            if (this instanceof Coin || this instanceof Bottle || this instanceof Endboss) {
                 ctx.rect(
                     this.position_x + this.collidingOffset.left,
                     this.position_y + this.collidingOffset.top,

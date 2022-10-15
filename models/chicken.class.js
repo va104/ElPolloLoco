@@ -3,6 +3,8 @@ class Chicken extends MovableObject {
     width = 60;
     height = 90;
     hitChicken = hitChicken;
+    speedY = -20;
+    movingDirection = 7;
 
     constructor() {
         // super() is just needed for methods but nut for properties
@@ -29,12 +31,21 @@ class Chicken extends MovableObject {
                     this.playAnimation(chickenNormalImagesWalking);
                 } else {
                     this.playAnimation(chickenNormalImagesDead);
-                    this.applyGravity();
+                    this.chickenFallsDown();
                 }
             }
         }, 100);
     }
 
-    
+    chickenFallsDown() {
+        setTimeout(() => {
+            if (this.isAboveGround()) {
+                this.position_y -= this.speedY;
+                this.position_x += this.movingDirection
+                this.movingDirection++;
+            }
+        }, 300);
+    }
+
 }
 

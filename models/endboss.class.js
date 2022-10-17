@@ -9,6 +9,7 @@ class Endboss extends MovableObject {
         'left': 60,
     };
     hitChicken = hitEndboss_sound;
+    isAboveOffset = 60;
 
     constructor() {
         super();

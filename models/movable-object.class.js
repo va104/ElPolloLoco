@@ -3,6 +3,7 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0; //Geschwindigkeit
     acceleration = 2.5; //Beschleunigung
+    isAboveOffset = 150;
     hpObject = 5;
     lastHit = 0;
     chickenisDead = false;
@@ -38,33 +39,7 @@ class MovableObject extends DrawableObject {
     }
 
     isAboveGround() {
-        if (this instanceof Chicken) {
-            // without this condition the object doesn´t stop falling
-            //später beim Aufräumen Funktionen bauen, die einen Offset für die Positionen mitgeben, dann muss immer nur eine Funktion aufgerufen werden
-            return (this.position_y > 500 ? false : true)
-        }
-        if (this instanceof ThrowableObject) {
-            if (this.chickenisDead) {
-                //for splashing animation
-                this.position_y = 340;
-                return false
-                // stop falling
-            } else if (this.position_y > 500) {
-                return false
-            } else {
-                //check the direction for throwing
-                return this.throwingDirection();
-            }
-        }
-        if(this instanceof smallChicken) {
-            return this.position_y < 360;
-        }
-        if (this instanceof Endboss) {
-            return this.position_y < 60;
-        }
-        else {
-            return this.position_y < 150;
-        }
+            return this.position_y < this.isAboveOffset;
     }
 
     jump() {
@@ -80,7 +55,7 @@ class MovableObject extends DrawableObject {
     }
 
     hit() {
-        this.hpObject -= 1;
+        this.hpObject--;
         if (this.hpObject < 0) {
             this.hpObject = 0;
         } else {

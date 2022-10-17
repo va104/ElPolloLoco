@@ -44,7 +44,7 @@ class World {
 
         setStoppapleInterval(() => {
             this.checkCollisionsEnemys();
-        }, 1000 / 60);
+        }, 1000 / 80);
     }
 
 
@@ -53,11 +53,12 @@ class World {
             if (this.character.jumpOnChicken(enemy)) {
                 enemy.chickenisDead = true;
                 enemy.hitChicken.play();
+                this.character.bounceEffect();
             } else if (enemy.position_y > 500) {
                 enemy.deleteObject(i, arr);
             } else if (!enemy.chickenisDead && this.character.isColliding(enemy) && !this.character.isHurt()) {
                 this.character.hit();
-                this.statusBarHealth.countHP -= 1;
+                this.statusBarHealth.countHP--;
                 if (this.statusBarHealth.countHP <= 0) {
                     this.statusBarHealth.countHP = 0;
                 }
@@ -80,7 +81,7 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D && (this.statusBarBottle.countBottles > 0) && !pauseGame) {
+        if (this.keyboard.D && (this.statusBarBottle.countBottles > 0) && !this.character.otherDirection && !pauseGame) {
             let bottle = new ThrowableObject(this.character.position_x + 100, this.character.position_y + 100);
             this.throwableObjects.push(bottle);
             this.statusBarBottle.countBottles--;
@@ -95,7 +96,7 @@ class World {
                 if (bottle.isColliding(enemy) && enemy instanceof Chicken) {
                     enemy.chickenisDead = true;
                     bottle.chickenisDead = true;
-                    enemy.hitChicken.play();
+                    hitChicken.play();
                     //delete bottle after the animation of splashing
                     setTimeout(() => {
                         bottle.deleteObject(indexOfThrownBottle, this.throwableObjects);

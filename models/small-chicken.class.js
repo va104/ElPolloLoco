@@ -2,8 +2,11 @@ class smallChicken extends MovableObject {
     position_y = 360;
     width = 40;
     height = 60;
+    isAboveOffset = 360;
+    hitChicken = hitSmallChicken;
+    movingDirection = 7;
 
-    constructor (speedVariable) {
+    constructor(speedVariable) {
         super();
         this.img = chickenImagesCache['img/3_enemies_chicken/chicken_small/1_walk/1_w.png'];
         this.imageCache = chickenImagesCache
@@ -15,35 +18,50 @@ class smallChicken extends MovableObject {
         this.applyGravity();
     }
 
-    animate(){
+    animate() {
         this.runSkills();
         this.runAnimation();
     }
-    
-    runSkills(){
+
+    runSkills() {
         // Chicken Moves Left
         setStoppapleInterval(() => {
             if (!pauseGame) {
                 this.moveLeft();
             }
         }, 1000 / 25);
-        
-        setStoppapleInterval(()=>{
+
+        setStoppapleInterval(() => {
             if (!pauseGame) {
-                this.jump()
+                if (!this.chickenisDead) {
+                    this.jump()
+                }
             }
         }, 2000)
     }
 
-    runAnimation(){
-        setStoppapleInterval(()=> {
+    runAnimation() {
+        setStoppapleInterval(() => {
             if (!pauseGame) {
-                if (!this.isAboveGround()) {
+                if (this.chickenisDead) {
+                    this.playAnimation(chickenSmallImagesDead);
+                    this.chickenFallsDown();
+                } else {
                     this.playAnimation(chickenSmallImagesWalking);
                 }
                 // if (this.isDead()) return this.animationDead();
             }
         }, 100)
+    }
+
+    chickenFallsDown() {
+        setTimeout(() => {
+            if (this.position_y < 500) {
+                this.position_y -= this.speedY;
+                this.position_x += this.movingDirection
+                this.movingDirection++;
+            }
+        }, 500);
     }
 
     // Sprung zwei vor eins zurück 

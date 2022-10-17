@@ -189,4 +189,8 @@ class Character extends MovableObject {
     jumpingImage(image) {
         this.img = this.imageCache[image];
     }
+
+    bounceEffect() {
+        this.speedY = 30;
+    }
 }  

@@ -2,9 +2,10 @@ class Chicken extends MovableObject {
     position_y = 340;
     width = 60;
     height = 90;
-    hitChicken = hitChicken;
-    speedY = -20;
+    speedY = -30;
     movingDirection = 7;
+    isAboveOffset = 500;
+    hitChicken = hitChicken;
 
     constructor() {
         // super() is just needed for methods but nut for properties
@@ -27,11 +28,11 @@ class Chicken extends MovableObject {
 
         setStoppapleInterval(() => {
             if (!pauseGame) {
-                if (!this.chickenisDead) {
-                    this.playAnimation(chickenNormalImagesWalking);
-                } else {
+                if (this.chickenisDead) {
                     this.playAnimation(chickenNormalImagesDead);
                     this.chickenFallsDown();
+                } else {
+                    this.playAnimation(chickenNormalImagesWalking);
                 }
             }
         }, 100);
@@ -44,7 +45,7 @@ class Chicken extends MovableObject {
                 this.position_x += this.movingDirection
                 this.movingDirection++;
             }
-        }, 300);
+        }, 500);
     }
 
 }

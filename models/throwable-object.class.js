@@ -1,6 +1,6 @@
 class ThrowableObject extends MovableObject {
-    position_x_otherDirection = 100;
     throwing_sound = throwing_sound;
+    isAboveOffset = 500;
 
     constructor(x, y) {
         super();
@@ -15,11 +15,7 @@ class ThrowableObject extends MovableObject {
     }
 
     throw() {
-        if (!pauseGame) {    
-            if(world.character.otherDirection){
-                //offset for throwing to the left side
-                this.position_x -= this.position_x_otherDirection;
-            }
+        if (!pauseGame) {
             this.throwing_sound.play();
             this.speedY = 15;
             this.applyGravity()
@@ -28,7 +24,7 @@ class ThrowableObject extends MovableObject {
 
     animate() {
         setStoppapleInterval(() => {
-            if (!pauseGame) {            
+            if (!pauseGame) {
                 if (!this.chickenisDead) {
                     this.playAnimation(bottleImagesRotation)
                 } else {
@@ -36,16 +32,14 @@ class ThrowableObject extends MovableObject {
                 }
             }
         }, 100);
-    }
 
-    throwingDirection() {
-        if (!pauseGame) {  
-            if (world.character.otherDirection) {
-                this.position_x -= 14;
-            } else {
+        setStoppapleInterval(() => {
+            if (this.isAboveGround() && !this.chickenisDead) {
                 this.position_x += 14;
             }
-            return true
-        }
+            else {
+                this.position_y = 340;
+            }
+        }, 1000 / 25);
     }
 }

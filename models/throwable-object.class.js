@@ -36,8 +36,7 @@ class ThrowableObject extends MovableObject {
         setStoppapleInterval(() => {
             if (this.isAboveGround() && !this.chickenisDead) {
                 this.position_x += 14;
-            }
-            else {
+            } else if (this.chickenisDead) {
                 this.position_y = 340;
             }
         }, 1000 / 25);

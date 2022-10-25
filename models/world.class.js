@@ -44,9 +44,9 @@ class World {
 
         setStoppapleInterval(() => {
             this.checkCollisionsEnemys();
+            this.checkJumpOnEndboss();
         }, 1000 / 80);
     }
-
 
     checkCollisionsEnemys() {
         this.level.enemies.forEach((enemy, i, arr) => {
@@ -58,12 +58,23 @@ class World {
                 enemy.deleteObject(i, arr);
             } else if (!enemy.chickenisDead && this.character.isColliding(enemy) && !this.character.isHurt()) {
                 this.character.hit();
-                this.statusBarHealth.countHP--;
-                if (this.statusBarHealth.countHP <= 0) {
-                    this.statusBarHealth.countHP = 0;
-                }
+                this.reduceStatusBar(this.statusBarHealth);
             }
         })
+    }
+
+    checkJumpOnEndboss() {
+        this.level.enemies.forEach(enemy => {
+            if (this.character.jumpOnChicken(enemy) && enemy instanceof Endboss) {
+                console.log('f');
+                enemy.hit();
+                this.character.bounceEffect();
+                enemy.chickenisHit = true;
+                enemy.resetChickenHit();
+                enemy.hitChicken.play();
+                this.reduceStatusBar(this.statusBarEndboss);
+            }
+        });
     }
 
     checkCollisions() {
@@ -90,37 +101,50 @@ class World {
     }
 
     checkCollisionBottleEnemy(bottle) {
-        let indexOfThrownBottle = this.throwableObjects.length - 1;
-        let test = setInterval(() => {
+        const indexOfThrownBottle = this.throwableObjects.length - 1;
+        const deleteBottle = setInterval(() => {
             this.level.enemies.forEach((enemy) => {
-                if (bottle.isColliding(enemy) && enemy instanceof Chicken) {
-                    enemy.chickenisDead = true;
-                    bottle.chickenisDead = true;
-                    hitChicken.play();
-                    //delete bottle after the animation of splashing
-                    setTimeout(() => {
-                        bottle.deleteObject(indexOfThrownBottle, this.throwableObjects);
-                        clearInterval(test);
-                    }, 600);
+                if (bottle.isColliding(enemy) && enemy instanceof Endboss && !enemy.isHurt()) {
+                    this.bottleHitsEndboss(enemy, bottle);
+                    this.deleteBottleAfterHit(bottle, indexOfThrownBottle, deleteBottle)
                 }
-                else if (bottle.isColliding(enemy) && enemy instanceof Endboss && !enemy.isHurt()) {
-                    enemy.hit();
-                    bottle.chickenisDead = true;
-                    enemy.hitChicken.play();
-                    this.statusBarEndboss.countHP -= 1;
-                    if (this.statusBarEndboss.countHP <= 0) {
-                        this.statusBarEndboss.countHP = 0;
-                    }
-                    //delete bottle after the animation of splashing
-                    setTimeout(() => {
-                        bottle.deleteObject(indexOfThrownBottle, this.throwableObjects);
-                        clearInterval(test);
-                    }, 600);
+                else if (bottle.isColliding(enemy) && !(enemy instanceof Endboss)) {
+                    this.bottleHitsChicken(enemy, bottle);
+                    this.deleteBottleAfterHit(bottle, indexOfThrownBottle, deleteBottle)
                 }
             })
-
-            ;
         }, 100);
+    }
+
+    bottleHitsChicken(enemy, bottle){
+        enemy.chickenisDead = true;
+        bottle.chickenisDead = true;
+        hitChicken.play();
+    }
+    
+    bottleHitsEndboss(enemy, bottle){
+        enemy.hit();
+        enemy.chickenisHit = true;
+        enemy.resetChickenHit();
+        bottle.chickenisDead = true;
+        enemy.hitChicken.play();
+        this.reduceStatusBar(this.statusBarEndboss);
+    }
+
+    reduceStatusBar(statusBar){
+        if (!isEndbossReached) {
+            statusBar.countHP--;
+        }
+        if (statusBar.countHP <= 0) {
+            statusBar.countHP = 0;
+        }
+    }
+
+    deleteBottleAfterHit(bottle, indexOfThrownBottle, deleteBottle){
+        setTimeout(() => {
+            bottle.deleteObject(indexOfThrownBottle, this.throwableObjects);
+            clearInterval(deleteBottle);
+        }, 600);
     }
 
     draw() {
@@ -142,7 +166,7 @@ class World {
         this.ctx.fillText(this.statusBarBottle.countBottles, 305, 55);
         if(endbossStatusBar){
             this.addToMap(this.statusBarEndboss);
-            this.ctx.fillText(this.statusBarEndboss.countHP, 600, 70);
+            this.ctx.fillText(this.statusBarEndboss.countHP, 590, 70);
         }
         this.ctx.translate(this.camera_x, 0); // Forwards
 

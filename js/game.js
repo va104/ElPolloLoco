@@ -10,15 +10,14 @@ let pauseGame = false;
 let fullscreen = false;
 
 function setStoppapleInterval(fn, time){
-    let id = setInterval(fn, time);
+    const id = setInterval(fn, time);
     intervalIds.push(id);
+    return id;
 }
 
 function clearAllIntervals() {
-    for (let i = 0; i < intervalIds.length; i++) {
-        const id = intervalIds[i];
-        clearInterval(id);
-        
+    for (const id of intervalIds) {
+        clearInterval(id)
     }
     intervalIds = [];
     // intervalIds.forEach(clearInterval);

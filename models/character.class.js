@@ -10,6 +10,7 @@ class Character extends MovableObject {
         'left': 30,
     }
     world;
+    hpObject = 30;
 
     constructor() {
         super()
@@ -82,7 +83,7 @@ class Character extends MovableObject {
         setStoppapleInterval(() => {
             if (!pauseGame) {
                 if (!isEndbossReached) {
-                    // work like if else
+                    // works like if else
                     if (this.isDead()) return this.animationDead();
                     if (this.isHurt()) return this.hurtAnimation();
                     if (this.characterIsMoving() && !this.isAboveGround()) return this.walkAnimation();

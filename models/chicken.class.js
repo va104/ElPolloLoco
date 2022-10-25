@@ -41,6 +41,7 @@ class Chicken extends MovableObject {
     chickenFallsDown() {
         setTimeout(() => {
             if (this.isAboveGround()) {
+                console.log(this.speedY)
                 this.position_y -= this.speedY;
                 this.position_x += this.movingDirection
                 this.movingDirection++;

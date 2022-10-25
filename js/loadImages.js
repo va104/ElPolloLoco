@@ -1,6 +1,6 @@
 // Bottle
-let bottleImagesCache = {};
-let allBottleImages = [
+const bottleImagesCache = {};
+const allBottleImages = [
     bottleImages = [
         'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
         'img/6_salsa_bottle/2_salsa_bottle_on_ground.png',      
@@ -22,8 +22,8 @@ let allBottleImages = [
 ];
 
 // Background Images
-let backgroundImagesCache = {};
-let allBackgroundImages = [
+const backgroundImagesCache = {};
+const allBackgroundImages = [
     backgroundImages = [
         'img/5_background/layers/air.png',
         'img/5_background/layers/1_first_layer/1.png',
@@ -36,8 +36,8 @@ let allBackgroundImages = [
 ];
 
 // Chicken
-let chickenImagesCache = {};
-let allImagesChicken = [
+const chickenImagesCache = {};
+const allImagesChicken = [
     chickenNormalImagesWalking = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
@@ -60,8 +60,8 @@ let allImagesChicken = [
 ]
 
 // Cloud
-let cloudImagesCache = {};
-let allCloudImages = [
+const cloudImagesCache = {};
+const allCloudImages = [
     cloudImage = [
         'img/5_background/layers/4_clouds/1.png',
         'img/5_background/layers/4_clouds/2.png'
@@ -69,8 +69,8 @@ let allCloudImages = [
 ];
 
 // Coin
-let coinImagesCache = {};
-let allImagesCoins = [
+const coinImagesCache = {};
+const allImagesCoins = [
     coinImages = [
         'img/8_coin/coin_1.png',
         'img/8_coin/coin_2.png',      
@@ -78,8 +78,8 @@ let allImagesCoins = [
 ];
 
 // Endboss
-let endbossImagesCache = {};
-let allEndbossImages = [
+const endbossImagesCache = {};
+const allEndbossImages = [
     endbossImagesWalking = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',
@@ -119,8 +119,8 @@ let allEndbossImages = [
 ];
 
 // Character
-let characterImagesCache = {};
-let allImagesCharacter = [
+const characterImagesCache = {};
+const allImagesCharacter = [
     characterImagesIdle = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',
@@ -180,7 +180,7 @@ let allImagesCharacter = [
 ]
 
 // all Objects for iterating into image cache 
-let allSources = [
+const allSources = [
     {
         'allArrays': allImagesCharacter,
         'imageCache': characterImagesCache,
@@ -220,7 +220,7 @@ function loadImages() {
         imageArray.forEach(singleArray => {
             //inner loop for adding the images to the cache 
             singleArray.forEach(path => {
-                let img = new Image();
+                const img = new Image();
                 img.src = path;
                 imageCache[path] = img;
             });

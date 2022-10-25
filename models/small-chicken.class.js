@@ -13,7 +13,8 @@ class smallChicken extends MovableObject {
         this.position_x = 500 + Math.random() * 500 // Number between 200 and 700;
         this.backAndForthSpeed = 2;
         this.speed = 0.15 + Math.random() * speedVariable;
-        this.jumpSpeed = Math.random() * 1000;
+        this.timeOutJump = this.randomIntFromInterval(4, 5) * 1000;
+        this.timeOutJumpBack = this.randomIntFromInterval(7, 8) * 1000;
         this.animate();
         this.applyGravity();
     }
@@ -24,38 +25,69 @@ class smallChicken extends MovableObject {
     }
 
     runSkills() {
-        // Chicken Moves Left
-        setStoppapleInterval(() => {
-            if (!pauseGame) {
-                this.moveLeft();
-            }
-        }, 1000 / 25);
+        if (!this.chickenisDead) {
+            this.position_y = 360;
+            this.otherDirection = false;
+            const intervalIDmoveLeft = this.skillMoveLeft();
+            const intervalIDJump = this.skillJump(); //every two secons
+            // after six seconds the chicken is jumping back as long its above the ground
+            // when its landing, it starts from the beginning
+            setTimeout(() => {
+                if (!pauseGame) {
+                    clearInterval(intervalIDmoveLeft);
+                    clearInterval(intervalIDJump);
+                    this.jump();
+                    this.skillJumpBack();
+                }
+            }, this.timeOutJumpBack);
+        }
+    }
 
-        setStoppapleInterval(() => {
+    skillMoveLeft() {
+        return setStoppapleInterval(() => {
             if (!pauseGame) {
                 if (!this.chickenisDead) {
-                    this.jump()
+                    this.moveLeft();
                 }
             }
-        }, 2000)
+        }, 1000 / 25);
+    }
+
+    skillJump() {
+        return setStoppapleInterval(() => {
+            if (!pauseGame) {
+                if (!this.chickenisDead) {
+                    this.jump();
+                }
+            }
+        }, this.timeOutJump);
+    }
+
+    skillJumpBack() {
+        this.otherDirection = true;
+        const intervalIDJumpBack = setStoppapleInterval(() => {
+            if (this.isAboveGround()) {
+                this.position_x += 5;
+            } else {
+                clearInterval(intervalIDJumpBack);
+                this.runSkills();
+            }
+        }, 1000 / 25);
     }
 
     runAnimation() {
         setStoppapleInterval(() => {
             if (!pauseGame) {
-                if (this.chickenisDead) {
-                    this.playAnimation(chickenSmallImagesDead);
-                    this.chickenFallsDown();
-                } else {
-                    this.playAnimation(chickenSmallImagesWalking);
-                }
-                // if (this.isDead()) return this.animationDead();
+                if (this.chickenisDead)
+                    return this.playAnimation(chickenSmallImagesDead), this.chickenFallsDown();
+                this.playAnimation(chickenSmallImagesWalking);
             }
         }, 100)
     }
 
     chickenFallsDown() {
         setTimeout(() => {
+            this.speedY = -20;
             if (this.position_y < 500) {
                 this.position_y -= this.speedY;
                 this.position_x += this.movingDirection
@@ -63,6 +95,4 @@ class smallChicken extends MovableObject {
             }
         }, 500);
     }
-
-    // Sprung zwei vor eins zurück 
 }

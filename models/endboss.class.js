@@ -10,36 +10,104 @@ class Endboss extends MovableObject {
     };
     hitChicken = hitEndboss_sound;
     isAboveOffset = 60;
+    speed = 10;
+    firstHit = false;
 
     constructor() {
         super();
         this.img = endbossImagesCache['img/4_enemie_boss_chicken/2_alert/G10.png'];
         this.imageCache = endbossImagesCache;
         this.position_x = 1000;
+        this.position_xInital = this.position_x;
         this.animate();
         this.endbossAnimation();
         this.acceleration = 0.01;
-        this.hpObject = 1;
+        this.hpObject = 6;
     }
 
     animate() {
+        this.runAnimation();
+        this.runSkills();
+        this.checkEndbossHealth();
+    }
+
+    runAnimation() {
         setStoppapleInterval(() => {
-                if (!pauseGame) {            
-                    //for walking
-                    if (this.isDead()) {
-                        this.playAnimation(endbossImagesDead);
-                        this.winGame();
-                    } else if (this.isHurt()) {
-                        this.playAnimation(endbossImagesHurt);
-                    } else {
-                        this.playAnimation(endbossImagesAlert);
-                    }
-                }
-            }, 200);
+            if (!pauseGame) {
+                //for walking
+                if (this.isDead()) return this.playAnimation(endbossImagesDead), this.winGame();
+                if (this.isHurt()) return this.playAnimation(endbossImagesHurt);
+                if (this.isAttacking()) return this.playAnimation(endbossImagesAttack);
+                if (!this.startingPositionReached() && this.firstHit) return this.playAnimation(endbossImagesWalking);
+                this.playAnimation(endbossImagesAlert);
+            }
+        }, 200);
+    }
+
+    runSkills() {
+        setStoppapleInterval(() => {
+            if (!pauseGame) {
+                if (this.chickenisHit) return this.attackToLeft(), this.turnLeft(), this.firstEndbossHit();
+                if (!this.chickenisHit && !this.startingPositionReached() && this.firstHit) return this.walkToRight();
+                if (this.startingPositionReached()) return this.turnLeft();
+                if (this.hpObject == 5) return this.shrinkEndboss(), this.increaseSpeed(); 
+            }
+        }, 1000 / 25);
+    }
+
+    checkEndbossHealth() {
+        setStoppapleInterval(() => {
+            if (!pauseGame) {
+                if (this.hpObject == 5) return this.shrinkEndboss(), this.increaseSpeed(); 
+            }
+        }, 300);
+    }
+
+    shrinkEndboss(){
+        if (this.height >= 300) {
+            this.height -= this.height * .10;
+            this.width -= this.width * .10;
+            this.position_y += this.position_y  * .35
+        }
+    }
+
+    increaseSpeed(){
+        this.speed = 13;
+    }
+
+    firstEndbossHit() {
+        this.firstHit = true;
+    }
+
+    isAttacking() {
+        return this.chickenisHit;
+    }
+
+    turnLeft() {
+        setTimeout(() => {
+            return this.otherDirection = false;
+        }, 1000);
+    }
+
+    attackToLeft() {
+        setTimeout(() => {
+            this.moveLeft();
+        }, 1000);
+    }
+
+    walkToRight() {
+        setTimeout(() => {
+            this.otherDirection = true;
+            this.moveRight();
+        }, 1000);
+    }
+
+    startingPositionReached() {
+        return this.position_xInital < this.position_x
     }
 
     endbossAnimation() {
-        let endbossAnimationInterval =
+        const endbossAnimationInterval =
             setInterval(() => {
                 if (!pauseGame) {
                     if (isEndbossReached) {
@@ -70,8 +138,8 @@ class Endboss extends MovableObject {
             game_music.src = './audio/music.mp3';
             game_music.volume = false;
             this.img = endbossImagesCache['img/4_enemie_boss_chicken/5_dead/G26.png'];
-            let win = getDocumentID('win');
-            let afterGame = getDocumentID('afterGame');
+            const win = getDocumentID('win');
+            const afterGame = getDocumentID('afterGame');
             win.classList.remove('d-none');
             afterGame.classList.remove('d-none');
             win.classList.add('growmenu');
@@ -79,11 +147,4 @@ class Endboss extends MovableObject {
             clearAllIntervals();
         }, 1000)
     }
-
-    //hier kommen später die Laufattacken rein
-    // test(){
-    //     setInterval(() => {
-    //         console.log('Enemy reached')
-    //     }, 100);
-    // }
 }

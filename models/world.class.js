@@ -10,6 +10,7 @@ class World {
     statusBarBottle = new StatusBarBottle();
     statusBarEndboss = new StatusBarEndboss();
     throwableObjects = [];
+    bottleInAir = false; 
 
     font = new FontFace('ranchers', 'url(fonts/ranchers-regular.ttf)');
 
@@ -44,16 +45,13 @@ class World {
 
         setStoppapleInterval(() => {
             this.checkCollisionsEnemys();
-            this.checkJumpOnEndboss();
-        }, 1000 / 80);
+        }, 1000 / 60);
     }
 
     checkCollisionsEnemys() {
         this.level.enemies.forEach((enemy, i, arr) => {
             if (this.character.jumpOnChicken(enemy)) {
-                enemy.chickenisDead = true;
-                enemy.hitChicken.play();
-                this.character.bounceEffect();
+                return enemy instanceof Endboss ? this.damageEndboss(enemy) : this.damageChicken(enemy);
             } else if (enemy.position_y > 500) {
                 enemy.deleteObject(i, arr);
             } else if (!enemy.chickenisDead && this.character.isColliding(enemy) && !this.character.isHurt()) {
@@ -63,19 +61,30 @@ class World {
         })
     }
 
-    checkJumpOnEndboss() {
-        this.level.enemies.forEach(enemy => {
-            if (this.character.jumpOnChicken(enemy) && enemy instanceof Endboss) {
-                console.log('f');
-                enemy.hit();
-                this.character.bounceEffect();
-                enemy.chickenisHit = true;
-                enemy.resetChickenHit();
-                enemy.hitChicken.play();
-                this.reduceStatusBar(this.statusBarEndboss);
-            }
-        });
+    damageEndboss(enemy) {
+        this.character.jump();
+        this.singleEndbossDamages(enemy);
     }
+
+    damageChicken(enemy) {
+        enemy.chickenisDead = true;
+        enemy.hitChicken.play();
+        this.character.jump();
+    }
+
+    bottleHitsEndboss(enemy, bottle){
+        bottle.chickenisDead = true;
+        this.singleEndbossDamages(enemy);
+    }
+
+    singleEndbossDamages(enemy) {
+        enemy.hit();
+        enemy.chickenisHit = true;
+        enemy.resetChickenHit();
+        enemy.hitChicken.play();
+        this.reduceStatusBar(this.statusBarEndboss);
+    }
+
 
     checkCollisions() {
         this.level.bottles.forEach((bottle, i, arr) => {
@@ -92,8 +101,9 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D && (this.statusBarBottle.countBottles > 0) && !this.character.otherDirection && !pauseGame) {
-            let bottle = new ThrowableObject(this.character.position_x + 100, this.character.position_y + 100);
+        if (this.keyboard.D && (this.statusBarBottle.countBottles > 0) && !this.character.otherDirection && !pauseGame && !this.bottleInAir) {
+            this.bottleInAir = !this.bottleInAir;
+            const bottle = new ThrowableObject(this.character.position_x + 100, this.character.position_y + 100);
             this.throwableObjects.push(bottle);
             this.statusBarBottle.countBottles--;
             this.checkCollisionBottleEnemy(bottle);
@@ -114,6 +124,9 @@ class World {
                 }
             })
         }, 100);
+        setTimeout(() => {
+            this.bottleInAir = !this.bottleInAir; 
+        }, 1000);
     }
 
     bottleHitsChicken(enemy, bottle){
@@ -122,14 +135,6 @@ class World {
         hitChicken.play();
     }
     
-    bottleHitsEndboss(enemy, bottle){
-        enemy.hit();
-        enemy.chickenisHit = true;
-        enemy.resetChickenHit();
-        bottle.chickenisDead = true;
-        enemy.hitChicken.play();
-        this.reduceStatusBar(this.statusBarEndboss);
-    }
 
     reduceStatusBar(statusBar){
         if (!isEndbossReached) {
@@ -199,7 +204,7 @@ class World {
         }
 
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
+        // mo.drawFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo)

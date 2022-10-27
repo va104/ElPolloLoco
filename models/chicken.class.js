@@ -12,7 +12,7 @@ class Chicken extends MovableObject {
         super();
         this.img = chickenImagesCache['img/3_enemies_chicken/chicken_normal/1_walk/1_w.png'];
         this.imageCache = chickenImagesCache;
-        this.position_x = 500 + Math.random() * 500 // Number between 200 and 700;
+        this.position_x = this.randomIntFromInterval(500, 4000);
         this.speed = 0.15 + Math.random() * 0.25
         this.animate();
     }
@@ -41,7 +41,6 @@ class Chicken extends MovableObject {
     chickenFallsDown() {
         setTimeout(() => {
             if (this.isAboveGround()) {
-                console.log(this.speedY)
                 this.position_y -= this.speedY;
                 this.position_x += this.movingDirection
                 this.movingDirection++;

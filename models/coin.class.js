@@ -10,13 +10,12 @@ class Coin extends MovableObject {
     coins_collect_sound = coins_collect_sound;
     newHP_sound = newHP_sound;
 
-    constructor() {
+    constructor(posX, posY) {
         super();
         this.img = coinImagesCache['img/8_coin/coin_1.png'];
         this.imageCache = coinImagesCache;
-        this.position_x = (Math.random() * 2000);
-        this.position_y = (Math.random() * 60);
         this.animate();
+        this.setCoinPosition(posX, posY)
     }
 
     animate() {
@@ -25,6 +24,20 @@ class Coin extends MovableObject {
                 this.playAnimation(coinImages);          
             }
         }, 350);
+    }
+
+    setCoinPosition(posX, posY) {
+        return posX && posY ? this.setFixedCoinPosition(posX, posY) : this.setRandomCoinPosition();
+    };
+
+    setFixedCoinPosition(posX, posY) {
+        this.position_x = posX;
+        this.position_y = posY;
+    }
+
+    setRandomCoinPosition() {
+        this.position_x = this.randomIntFromInterval(200, 4000);
+        this.position_y = this.randomIntFromInterval(1, 60);   
     }
 
     collectCoins (i, arr ){

@@ -17,12 +17,11 @@ class Endboss extends MovableObject {
         super();
         this.img = endbossImagesCache['img/4_enemie_boss_chicken/2_alert/G10.png'];
         this.imageCache = endbossImagesCache;
-        this.position_x = 1000;
+        this.position_x = 4500;
         this.position_xInital = this.position_x;
         this.animate();
         this.endbossAnimation();
         this.acceleration = 0.01;
-        this.hpObject = 6;
     }
 
     animate() {
@@ -65,9 +64,10 @@ class Endboss extends MovableObject {
 
     shrinkEndboss(){
         if (this.height >= 300) {
-            this.height -= this.height * .10;
-            this.width -= this.width * .10;
-            this.position_y += this.position_y  * .35
+            this.height -= this.height * .20;
+            this.width -= this.width * .20;
+            this.position_y += this.position_y  * .70;
+            this.collidingOffset.top = 120;
         }
     }
 
@@ -134,17 +134,16 @@ class Endboss extends MovableObject {
 
     winGame() {
         setTimeout(() => {
+            clearAllIntervals();
             win_sound.play();
             game_music.src = './audio/music.mp3';
             game_music.volume = false;
+            walking_sound.pause();
             this.img = endbossImagesCache['img/4_enemie_boss_chicken/5_dead/G26.png'];
-            const win = getDocumentID('win');
-            const afterGame = getDocumentID('afterGame');
             win.classList.remove('d-none');
             afterGame.classList.remove('d-none');
             win.classList.add('growmenu');
             afterGame.classList.add('growmenu');
-            clearAllIntervals();
-        }, 1000)
+        }, 0)
     }
 }

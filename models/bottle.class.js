@@ -4,10 +4,10 @@ class Bottle extends MovableObject{
     width = 60;
     offset = 0;
     bottle_collect_sound = bottle_collect_sound;
-    constructor(offset, image, x){
+    constructor(offset, image){
         super(); 
         this.img = image; 
-        this.position_x = (Math.random() * 100) + x;
+        this.position_x = this.randomIntFromInterval(500, 4500);;
         this.offset = offset;
         this.setBottleOffset();
     }

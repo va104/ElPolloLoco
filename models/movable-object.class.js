@@ -4,7 +4,7 @@ class MovableObject extends DrawableObject {
     speedY = 0; //Geschwindigkeit
     acceleration = 2.5; //Beschleunigung
     isAboveOffset = 150;
-    hpObject = 5;
+    hpObject = 10;
     lastHit = 0;
     chickenisDead = false;
     chickenisHit = false;
@@ -47,14 +47,7 @@ class MovableObject extends DrawableObject {
         this.speedY = 30;
     }
 
-    isColliding(obj) {
-        return (this.position_x + this.width - this.collidingOffset.right) >= (obj.position_x + obj.collidingOffset.left)
-            && (this.position_y + this.height - this.collidingOffset.bottom) >= (obj.position_y + obj.collidingOffset.right)
-            && (this.position_x + this.collidingOffset.left) <= (obj.position_x + obj.width - obj.collidingOffset.right)
-            && (this.position_y + this.collidingOffset.top) <= (obj.position_y + obj.height - obj.collidingOffset.bottom)
-        // obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
-    }
-
+    
     hit() {
         this.hpObject--;
         if (this.hpObject < 0) {
@@ -67,11 +60,19 @@ class MovableObject extends DrawableObject {
     isDead() {
         return this.hpObject == 0;
     }
-
+    
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; // Diff in ms
         timepassed = timepassed / 1000 // Diff in sec
         return timepassed < 1
+    }
+
+    isColliding(obj) {
+        return (this.position_x + this.width - this.collidingOffset.right) >= (obj.position_x + obj.collidingOffset.left)
+            && (this.position_x + this.collidingOffset.left) <= (obj.position_x + obj.width - obj.collidingOffset.right)
+            && (this.position_y + this.collidingOffset.top) <= (obj.position_y + obj.height - obj.collidingOffset.bottom)
+            && (this.position_y + this.height - this.collidingOffset.bottom) >= (obj.position_y + obj.collidingOffset.top)
+        // obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
     }
 
     jumpOnChicken(obj) {
@@ -94,6 +95,6 @@ class MovableObject extends DrawableObject {
       resetChickenHit(){
         setTimeout(() => {
             this.chickenisHit = false;
-        }, 3000);
+        }, 2000);
     }
 }

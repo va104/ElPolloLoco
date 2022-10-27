@@ -7,7 +7,7 @@ class Cloud extends MovableObject{
         // super() is just needed for methods but nut for properties
         super();
         this.img = cloudImagesCache['img/5_background/layers/4_clouds/1.png'];
-        this.position_x = Math.random() * 500; // Number between 200 and 700;
+        this.position_x = this.randomIntFromInterval(400, 5000);
         this.animate();
     }
 

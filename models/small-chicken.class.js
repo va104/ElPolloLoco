@@ -10,11 +10,11 @@ class smallChicken extends MovableObject {
         super();
         this.img = chickenImagesCache['img/3_enemies_chicken/chicken_small/1_walk/1_w.png'];
         this.imageCache = chickenImagesCache
-        this.position_x = 500 + Math.random() * 500 // Number between 200 and 700;
+        this.position_x = this.randomIntFromInterval(500, 4500);
         this.backAndForthSpeed = 2;
         this.speed = 0.15 + Math.random() * speedVariable;
-        this.timeOutJump = this.randomIntFromInterval(4, 5) * 1000;
-        this.timeOutJumpBack = this.randomIntFromInterval(7, 8) * 1000;
+        this.timeOutJump = this.randomIntFromInterval(4000, 5000);
+        this.timeOutJumpBack = this.randomIntFromInterval(7000, 8000);
         this.animate();
         this.applyGravity();
     }

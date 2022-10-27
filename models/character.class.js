@@ -29,7 +29,7 @@ class Character extends MovableObject {
     checkIfEndbossIsReached() {
         const endbossAnimationInterval =
             setInterval(() => {
-                if (this.position_x >= 700) {
+                if (this.position_x >= this.endbossSpwan() - 300) {
                     isEndbossReached = true;
                     this.img = characterImagesCache['img/2_character_pepe/1_idle/idle/I-1.png'];
                     game_music.pause();
@@ -37,6 +37,10 @@ class Character extends MovableObject {
                     clearInterval(endbossAnimationInterval);
                 }
             }, 1000 / 60)
+    }
+
+    endbossSpwan(){
+        return world.level.enemies[world.level.enemies.length - 1].position_x
     }
 
     runSkills() {
@@ -191,7 +195,4 @@ class Character extends MovableObject {
         this.img = this.imageCache[image];
     }
 
-    bounceEffect() {
-        this.speedY = 30;
-    }
 }  

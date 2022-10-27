@@ -1,6 +1,6 @@
 let canvas;
 let world;
-let keyboard = new Keyboard();
+const keyboard = new Keyboard();
 let intervalIds = [];
 let isEndbossReached = false;
 let endbossStatusBar = false;
@@ -8,6 +8,10 @@ let gameMusicStatus = true;
 let rememberVolumeGameMusic = 1;
 let pauseGame = false;
 let fullscreen = false;
+
+function init() {
+    loadImages();
+}
 
 function setStoppapleInterval(fn, time){
     const id = setInterval(fn, time);
@@ -20,11 +24,6 @@ function clearAllIntervals() {
         clearInterval(id)
     }
     intervalIds = [];
-    // intervalIds.forEach(clearInterval);
-}
-
-function init() {
-    loadImages();
 }
 
 function startnewGame() {
@@ -33,6 +32,7 @@ function startnewGame() {
     initLevel1();
     world = new World(canvas, keyboard);
     game_music.volume = rememberVolumeGameMusic;
+    endbossStatusBar = false;
     closeEndgameImages();
     if (gameMusicStatus) {
         playGameMusic();
@@ -40,9 +40,6 @@ function startnewGame() {
 }
 
 function closeEndgameImages(){
-    let loose = getDocumentID('loose');
-    let afterGame = getDocumentID('afterGame'); 
-    let win = getDocumentID('win');
     loose.classList.add('d-none');
     afterGame.classList.add('d-none');
     win.classList.add('d-none');

@@ -10,7 +10,7 @@ class Character extends MovableObject {
         'left': 30,
     }
     world;
-    hpObject = 30;
+    hpObject = 10;
 
     constructor() {
         super()
@@ -39,7 +39,7 @@ class Character extends MovableObject {
             }, 1000 / 60)
     }
 
-    endbossSpwan(){
+    endbossSpwan() {
         return world.level.enemies[world.level.enemies.length - 1].position_x
     }
 
@@ -82,12 +82,10 @@ class Character extends MovableObject {
         }
     }
 
-
     runAnimation() {
         setStoppapleInterval(() => {
             if (!pauseGame) {
                 if (!isEndbossReached) {
-                    // works like if else
                     if (this.isDead()) return this.animationDead();
                     if (this.isHurt()) return this.hurtAnimation();
                     if (this.characterIsMoving() && !this.isAboveGround()) return this.walkAnimation();
@@ -116,23 +114,20 @@ class Character extends MovableObject {
         }, 130)
     }
 
-    animationDead(){
+    animationDead() {
         this.playAnimation(characterImagesDead);
         dying_sound.play();
         this.looseGame();
     }
 
-    hurtAnimation(){
+    hurtAnimation() {
         hurting_sound.play();
         this.playAnimation(characterImagesHurt);
     }
 
-    walkAnimation(){
+    walkAnimation() {
         this.playAnimation(characterImagesWalking);
     }
-
-    // Different images for dead, hurt, juming, walking 
-
 
     characterIsMoving() {
         return (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)
@@ -152,8 +147,6 @@ class Character extends MovableObject {
             game_music.volume = false;
             game_music.src = './audio/music.mp3';
             this.img = characterImagesCache['img/2_character_pepe/5_dead/D-56.png'];
-            let loose = getDocumentID('loose');
-            let afterGame = getDocumentID('afterGame');
             loose.classList.remove('d-none');
             afterGame.classList.remove('d-none');
             loose.classList.add('growmenu');

@@ -8,12 +8,15 @@ let gameMusicStatus = true;
 let rememberVolumeGameMusic = 1;
 let pauseGame = false;
 let fullscreen = false;
+let mobileDeviceIsUsed = false;
 
 function init() {
     loadImages();
+    checkMobileOrientation();
+    checkDesktopOrientation();
 }
 
-function setStoppapleInterval(fn, time){
+function setStoppapleInterval(fn, time) {
     const id = setInterval(fn, time);
     intervalIds.push(id);
     return id;
@@ -39,13 +42,14 @@ function startnewGame() {
     }
 }
 
-function closeEndgameImages(){
+function closeEndgameImages() {
     loose.classList.add('d-none');
     afterGame.classList.add('d-none');
     win.classList.add('d-none');
 }
 
 function startGame() {
+    startGameScreen.classList.remove('d-none');
     zoomInEffect();
     canvas = document.getElementById('canvas');
     initLevel1();
@@ -77,7 +81,7 @@ function changeVolume(value) {
 }
 
 function muteGame() {
-    let id = getDocumentID('muteGame');
+    const id = getDocumentID('muteGame');
     if (gameMusicStatus) {
         id.src = './img/11_icons/mute-2-64_white.png';
         game_music.pause();
@@ -103,15 +107,15 @@ function changeMusic(status) {
 
 function showMenu(displayWrapper, child) {
     closeBurgerMenu();
-    let wrapper = getDocumentID(displayWrapper);
-    let menu = getDocumentID(child);
+    const wrapper = getDocumentID(displayWrapper);
+    const menu = getDocumentID(child);
     menu.classList.remove('d-none');
     wrapper.classList.remove('d-none');
     menu.classList.add('growmenu');
 }
 
 function imagesMusicOn() {
-    let play = getDocumentID('muteGame');
+    const play = getDocumentID('muteGame');
     play.src = './img/11_icons/volume-up-4-64_white.png';
     musicOff.classList.add('opacity');
     musicOff.src = './img/11_icons/mute-2-64_off.png'
@@ -120,7 +124,7 @@ function imagesMusicOn() {
 }
 
 function imagesMusicOff() {
-    let pause = getDocumentID('muteGame');
+    const pause = getDocumentID('muteGame');
     pause.src = './img/11_icons/mute-2-64_white.png'
     musicOff.classList.remove('opacity');
     musicOff.src = './img/11_icons/mute-2-64.png'
@@ -129,22 +133,32 @@ function imagesMusicOff() {
 }
 
 function changeScreen(screen) {
-    let smallScr = getDocumentID('smallScreen');
-    let fullScr = getDocumentID('fullScreen');
     if (screen == 'small') {
-        smallScr.classList.add('screenOn');
-        smallScr.classList.remove('opacity');
-        fullScr.classList.remove('screenOn');
-        fullScr.classList.add('opacity');
-        fullscreen = false;
+        smallScreen()
     } else {
-        smallScr.classList.remove('screenOn');
-        smallScr.classList.add('opacity');
-        fullScr.classList.add('screenOn');
-        fullScr.classList.remove('opacity');
-        fullscreen = true;
+        fullScreen()
     }
 };
+
+function smallScreen() {
+    const smallScr = getDocumentID('smallScreen');
+    const fullScr = getDocumentID('fullScreen');
+    smallScr.classList.add('screenOn');
+    smallScr.classList.remove('opacity');
+    fullScr.classList.remove('screenOn');
+    fullScr.classList.add('opacity');
+    fullscreen = false;
+}
+
+function fullScreen() {
+    const fullScr = getDocumentID('fullScreen');
+    const smallScr = getDocumentID('smallScreen');
+    smallScr.classList.remove('screenOn');
+    smallScr.classList.add('opacity');
+    fullScr.classList.add('screenOn');
+    fullScr.classList.remove('opacity');
+    fullscreen = true;
+}
 
 function settings() {
     closeBurgerMenu();
@@ -155,19 +169,19 @@ function imprint() {
 };
 
 function closeMenu(menuID) {
-    let closeDialog = getDocumentID(menuID);
+    const closeDialog = getDocumentID(menuID);
     closeDialog.classList.add('d-none');
 }
 
 function closeBurgerMenu() {
-    let menuSettings = getDocumentID('myInput');
+    const menuSettings = getDocumentID('myInput');
     menuSettings.checked = false;
 }
 
 function zoomInEffect() {
-    let image = getDocumentID('coverImage');
-    let startScreen = getDocumentID('startScreen');
-    let bar = getDocumentID('bar');
+    const image = getDocumentID('coverImage');
+    const startScreen = getDocumentID('startScreen');
+    const bar = getDocumentID('bar');
     image.classList.add('ease-in');
     bar.classList.add('d-none');
     setTimeout(() => {
@@ -176,9 +190,9 @@ function zoomInEffect() {
 }
 
 window.addEventListener('load', () => {
-    let closeControl = getDocumentID('controlWrapper');
-    let closeSetting = getDocumentID('settingsWrapper');
-    let closeImprint = getDocumentID('imprintWrapper');
+    const closeControl = getDocumentID('controlWrapper');
+    const closeSetting = getDocumentID('settingsWrapper');
+    const closeImprint = getDocumentID('imprintWrapper');
     document.onclick = function (e) {
         if (e.target.id == 'controlWrapper') {
             closeControl.classList.add('d-none')
@@ -250,55 +264,40 @@ function playGameMusic() {
     game_music.loop = true;
 }
 
-window.addEventListener('keydown', (event) => {
-    if (event.keyCode == 39) {
-        keyboard.RIGHT = true;
-    }
+function checkMobileOrientation() {
+    setInterval(() => {
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        mobileDeviceIsUsed = isMobile;
+        if (mobileDeviceIsUsed && window.matchMedia("(orientation: landscape)").matches) {
+            landscapeSight();
+        }
+        if (mobileDeviceIsUsed && window.matchMedia("(orientation: portrait)").matches) {
+            portraitSight();
+        }
+    }, 100)
+}
 
-    if (event.keyCode == 37) {
-        keyboard.LEFT = true;
-    }
 
-    if (event.keyCode == 38) {
-        keyboard.UP = true;
-    }
+function checkDesktopOrientation() {
+    setInterval(() => {
+        if (window.innerWidth < 1000 && !mobileDeviceIsUsed) {
+            portraitSight();
+        }
+        if (window.innerWidth > 1000 && !mobileDeviceIsUsed) {
+            landscapeSight();
+        }
+    }, 100);
+}
 
-    if (event.keyCode == 40) {
-        keyboard.DOWN = true;
-    }
+function landscapeSight() {
+    portraitMode.style.display = 'none';
+    startScreen.style.display = 'block';
+    startGameScreen.style.display = 'block';
+}
 
-    if (event.keyCode == 32) {
-        keyboard.SPACE = true;
-    }
-
-    if (event.keyCode == 68) {
-        keyboard.D = true;
-    }
-})
-
-window.addEventListener('keyup', (event) => {
-    if (event.keyCode == 39) {
-        keyboard.RIGHT = false;
-    }
-
-    if (event.keyCode == 37) {
-        keyboard.LEFT = false;
-    }
-
-    if (event.keyCode == 38) {
-        keyboard.UP = false;
-    }
-
-    if (event.keyCode == 40) {
-        keyboard.DOWN = false;
-    }
-
-    if (event.keyCode == 32) {
-        keyboard.SPACE = false;
-    }
-
-    if (event.keyCode == 68) {
-        keyboard.D = false;
-    }
-})
+function portraitSight() {
+    portraitMode.style.display = 'flex';
+    startScreen.style.display = 'none';
+    startGameScreen.style.display = 'none';
+}
 

@@ -54,7 +54,7 @@ const allImagesChicken = [
 
     ],
     chickenSmallImagesDead = [
-        '/img/3_enemies_chicken/chicken_small/2_dead/dead.png',
+        'img/3_enemies_chicken/chicken_small/2_dead/dead.png',
     ],
 
 ]

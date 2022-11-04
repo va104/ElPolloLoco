@@ -1,4 +1,4 @@
-let audio = [
+const audio = [
     game_music = new Audio('./audio/music.mp3'),
     walking_sound = new Audio('./audio/walking.mp3'),
     jumping_sound = new Audio('./audio/jump.mp3'),

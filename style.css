@@ -86,6 +86,31 @@ canvas {
     height: 40px;
 }
 
+.mobileKeys {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 35%;
+    background: aliceblue;
+}
+
+.mobileKeys img {
+    margin: 0 !important;
+    padding: 8px !important;
+}
+
+#mobileLeft{
+    display: none;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+#mobileRight{
+    display: none;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
 .canvasoverlay{
     width: 100%;
     height: 100%;
@@ -94,8 +119,21 @@ canvas {
     z-index: 1;
     background: transparent;
     display: flex;
-    align-items: self-end;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gameSettings {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.gameSettings img {
+    height: 30px;
+    padding: 10px;
+    cursor: pointer;
 }
 
 #fullscreen{
@@ -110,8 +148,8 @@ canvas {
 }
 
 .canvasoverlay img {
-    width: 25px;
-    height: 25px;
+    width: 35px;
+    height: 35px;
     padding: 5px;
     margin-right: 5px;
     cursor: pointer;
@@ -341,7 +379,7 @@ input[type="checkbox"]:checked~label .middle {
     width: clamp(250px, 80%, 650px);
     border-radius: 5px;
     height: 500px;
-    background-color: #b47471;;
+    background-color: #b47471;
     box-shadow: 6px -4px 11px rgb(255 255 255 / 19%);
     position: relative;
     display: flex;
@@ -388,6 +426,30 @@ input[type="checkbox"]:checked~label .middle {
 .menu span {
     color: #EFD4A5 !important;
     padding-right: 10px;
+}
+
+.portrait{
+    width: 100%;
+    height: 100vh;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    background-position-y: center;
+    background-size: cover !important;
+    background: linear-gradient( to bottom, rgba(0,0,0, 0), rgba(0,0,0, 0.4) ),url(./img/5_background/first_half_background.png);
+}
+
+.portrait > div{
+    background: #f0ffffb3;
+    text-align: center;
+    width: 100%;
+}
+
+.portrait > div > p{
+    letter-spacing: 4px;
+    font-size: 1.2rem;
 }
 
 .growmenu {
@@ -523,9 +585,4 @@ input[type=range] {
 .imprint div p{
     font-size: 1.5rem !important;
 }
-@media (max-width: 1150px) {
-    .wrapperStartScreen img{
-        width: 100%;  
-        height: unset;
-    }
-}
+

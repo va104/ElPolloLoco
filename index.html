@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css">
     <link rel="icon" type="image/svg+xml" href="./img/11_icons/favicon.svg" sizes="any">
-    <!-- <link rel="shortcut icon" href="./img/11_icons/favicon.ico"> -->
     <title>El pollo loco</title>
     <script src="./js/loadImages.js"></script>
     <script src="./js/audio.js"></script>
@@ -37,46 +37,58 @@
 <body onload="init()">
     <div class="gameScreen">
     </div>
-    <div class="game" >
-        <div class="gameChild">
-            <div class="controlGame">
-                <div>
-                    <p>Move Left</p>
-                    <img src="./img/11_icons/left-round-64.png" alt="">
-                </div>
-                <div>
-                    <p>Move Right</p>
-                    <img src="./img/11_icons/right-round-64.png" alt="">
-                </div>
-                <div>
-                    <p>Jump</p>
-                    <img src="./img/11_icons/myspace-5-64.png" alt="">
-                </div>
-                <div>
-                    <p>Throw Bottle</p>
-                    <img src="./img/11_icons/d.png" alt="">
+    <div id="startGameScreen" class="d-none">
+        <div class="game">
+            <div class="gameChild">
+                <div class="controlGame">
+                    <div>
+                        <p>Move Left</p>
+                        <img src="./img/11_icons/left-round-64.png" alt="">
+                    </div>
+                    <div>
+                        <p>Move Right</p>
+                        <img src="./img/11_icons/right-round-64.png" alt="">
+                    </div>
+                    <div>
+                        <p>Jump</p>
+                        <img src="./img/11_icons/myspace-5-64.png" alt="">
+                    </div>
+                    <div>
+                        <p>Throw Bottle</p>
+                        <img src="./img/11_icons/d.png" alt="">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="fullscreen">
-            <canvas id="canvas" width="720px" height="480px">
-            </canvas>
-            <section class="canvasoverlay">
-                <div>
+            <div id="fullscreen">
+                <canvas id="canvas" width="720px" height="480px">
+                </canvas>
+                <section class="canvasoverlay">
+                    <div id="mobileLeft" class="mobileKeys">
+                        <img id="mobileLandscSpace" class="unselectable"  src="./img/11_icons/mobileSpace.png" alt="Space">
+                        <img id="mobileLandscLeft" class="unselectable" src="./img/11_icons/mobileArrowLeft.png" alt="Left">
+                    </div>
+                    <div id="mobileRight" class="mobileKeys">
+                        <img id="mobileLandscThrow" class="unselectable" src="./img/11_icons/mobileThrow.png" alt="Throw">
+                        <img id="mobileLandscRight" class="unselectable" src="./img/11_icons/mobileArrowRight.png" alt="Right">
+                    </div>
+                </section>
+                <div class="gameSettings">
                     <img id="pauseGame" onclick="pausePlayGame()" src="./img/11_icons/pause-64.png" alt="pause">
-                    <img id="muteGame" onclick="muteGame()" src="./img/11_icons/volume-up-4-64_white.png" alt="pause">
-                    <img id="fullscreenGame" onclick="fullscreenGame()" src="./img/11_icons/fullscreen-enter-64.png" alt="pause">
+                    <img id="muteGame" onclick="muteGame()" src="./img/11_icons/volume-up-4-64_white.png"
+                        alt="pause">
+                    <img id="fullscreenGame" onclick="fullscreenGame()" src="./img/11_icons/fullscreen-enter-64.png"
+                        alt="pause">
                 </div>
-            </section>
-            <img id="win" class="gameEnd d-none" src="./img/9_intro_outro_screens/game_over/game over!.png" alt="">
-            <img id="loose" class="gameEnd d-none" src="./img/9_intro_outro_screens/game_over/oh no you lost!.png" alt="">
-            <div id="afterGame" class="afterGame d-none">
-                <button onclick="reloadPage()">Back To Menu</button>
-                <button onclick="startnewGame()">Restart Game</button>
+                <img id="win" class="gameEnd d-none" src="./img/9_intro_outro_screens/game_over/game over!.png" alt="">
+                <img id="loose" class="gameEnd d-none" src="./img/9_intro_outro_screens/game_over/oh no you lost!.png"
+                    alt="">
+                <div id="afterGame" class="afterGame d-none">
+                    <button onclick="reloadPage()">Back To Menu</button>
+                    <button onclick="startnewGame()">Restart Game</button>
+                </div>
             </div>
         </div>
     </div>
-    <!-- <button onclick="startnewGame()" style="width: 100px; height: 100px; position: absolute; top: 0px"></button> -->
     <main id="startScreen">
         <aside>
             <ul class="asideList">
@@ -131,14 +143,18 @@
             <div>
                 <p>Music</p>
                 <div>
-                    <img id="musicOn" onclick="changeMusic('on')" class="cursor marginRight" src="./img/11_icons/volume-up-4-64.png" alt="">
-                    <img id="musicOff" onclick="changeMusic('off')" class="cursor opacity" src="./img/11_icons/mute-2-64_off.png" alt="">
+                    <img id="musicOn" onclick="changeMusic('on')" class="cursor marginRight"
+                        src="./img/11_icons/volume-up-4-64.png" alt="">
+                    <img id="musicOff" onclick="changeMusic('off')" class="cursor opacity"
+                        src="./img/11_icons/mute-2-64_off.png" alt="">
                 </div>
             </div>
             <div>
                 <p>Volume</p>
-                <p>  
-                    <input oninput="changeVolume(this.value)" type="range" id="volume" name="volume" min="0" max="100" value="100"></p>
+                <p>
+                    <input oninput="changeVolume(this.value)" type="range" id="volume" name="volume" min="0" max="100"
+                        value="100">
+                </p>
             </div>
             <div>
                 <p>Screen</p>
@@ -165,6 +181,12 @@
                     <p>Tel.: +49 171 5522270</p>
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="portraitMode" class="portrait">
+        <div>
+            <h1>El Pollo Loco</h1>
+            <p>Please rotate your device</p>
         </div>
     </div>
 </body>

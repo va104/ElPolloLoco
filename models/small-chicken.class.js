@@ -26,7 +26,7 @@ class smallChicken extends MovableObject {
 
     runSkills() {
         if (!this.chickenisDead) {
-            this.position_y = 360;
+            // this.position_y = 360;
             this.otherDirection = false;
             const intervalIDmoveLeft = this.skillMoveLeft();
             const intervalIDJump = this.skillJump(); //every two secons

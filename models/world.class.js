@@ -85,7 +85,6 @@ class World {
         this.reduceStatusBar(this.statusBarEndboss);
     }
 
-
     checkCollisions() {
         this.level.bottles.forEach((bottle, i, arr) => {
             if (this.character.isColliding(bottle)) {
@@ -130,9 +129,9 @@ class World {
     }
 
     bottleHitsChicken(enemy, bottle){
+        enemy.hitChicken.play();
         enemy.chickenisDead = true;
         bottle.chickenisDead = true;
-        hitChicken.play();
     }
     
 
@@ -149,7 +148,7 @@ class World {
         setTimeout(() => {
             bottle.deleteObject(indexOfThrownBottle, this.throwableObjects);
             clearInterval(deleteBottle);
-        }, 600);
+        }, 200);
     }
 
     draw() {

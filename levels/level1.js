@@ -11,7 +11,7 @@ function initLevel1 () {
             new Chicken(),
             new Chicken(),
             new Chicken(),
-            new smallChicken(2.1),
+            new smallChicken(1),
             new smallChicken(2.6),
             new smallChicken(3.5),
             new smallChicken(3.8),

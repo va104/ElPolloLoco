@@ -18,9 +18,9 @@ body, html{
 }
 
 
-.unselectable {
-    --webkit-touch-callout: none;
-    -webkit-user-select: none;  
+.unselectable { 
+    background: none;
+    border: none;
 }
 
 h1{

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="mobile.css">
+    <link rel="stylesheet" href="fonts/fredoka.css">
     <link rel="icon" type="image/svg+xml" href="./img/11_icons/favicon.svg" sizes="any">
     <title>El pollo loco</title>
     <script src="./js/loadImages.js"></script>
@@ -64,12 +65,12 @@
                 </canvas>
                 <section class="canvasoverlay">
                     <div id="mobileLeft" class="mobileKeys">
-                        <img id="mobileLandscSpace" class="unselectable"  src="./img/11_icons/mobileSpace.png" alt="Space">
-                        <img id="mobileLandscLeft" class="unselectable" src="./img/11_icons/mobileArrowLeft.png" alt="Left">
+                       <button class="unselectable"><img id="mobileLandscSpace" src="./img/11_icons/mobileSpace.png" alt="Space"></button> 
+                       <button class="unselectable"><img id="mobileLandscLeft" src="./img/11_icons/mobileArrowLeft.png" alt="Left"></button> 
                     </div>
                     <div id="mobileRight" class="mobileKeys">
-                        <img id="mobileLandscThrow" class="unselectable" src="./img/11_icons/mobileThrow.png" alt="Throw">
-                        <img id="mobileLandscRight" class="unselectable" src="./img/11_icons/mobileArrowRight.png" alt="Right">
+                        <button class="unselectable"><img id="mobileLandscThrow" src="./img/11_icons/mobileThrow.png" alt="Throw"></button>
+                        <button class="unselectable"><img id="mobileLandscRight" src="./img/11_icons/mobileArrowRight.png" alt="Right"></button>
                     </div>
                 </section>
                 <div class="gameSettings">
@@ -80,8 +81,7 @@
                         alt="pause">
                 </div>
                 <img id="win" class="gameEnd d-none" src="./img/9_intro_outro_screens/game_over/game over!.png" alt="">
-                <img id="loose" class="gameEnd d-none" src="./img/9_intro_outro_screens/game_over/oh no you lost!.png"
-                    alt="">
+                <img id="loose" class="gameEnd d-none" src="./img/9_intro_outro_screens/game_over/oh no you lost!.png" alt="">
                 <div id="afterGame" class="afterGame d-none">
                     <button onclick="reloadPage()">Back To Menu</button>
                     <button onclick="startnewGame()">Restart Game</button>
@@ -203,6 +203,7 @@
             <p>Please rotate your device</p>
         </div>
     </div>
+
 </body>
 
 </html>

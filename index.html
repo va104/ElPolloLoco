@@ -37,7 +37,7 @@
 <body onload="init()">
     <div class="gameScreen">
     </div>
-    <div id="startGameScreen" class="d-none">
+    <div id="startGameScreen" class="">
         <div class="game">
             <div class="gameChild">
                 <div class="controlGame">
@@ -90,99 +90,113 @@
         </div>
     </div>
     <main id="startScreen">
-        <aside>
-            <ul class="asideList">
-                <li onclick="showMenu('controlWrapper', 'controlChild')" class="asideAnchor">Controls</li>
-                <li onclick="showMenu('settingsWrapper', 'settingsChild')" class="asideAnchor">Settings</li>
-                <li onclick="showMenu('imprintWrapper', 'imprintChild')" class="asideAnchor">Imprint</li>
-            </ul>
-        </aside>
         <section>
             <input type="checkbox" id="myInput">
+            <aside>
+                <ul class="asideList">
+                    <li onclick="showMenu('controlWrapper', 'controlChild')" class="asideAnchor">Controls</li>
+                    <li onclick="showMenu('settingsWrapper', 'settingsChild')" class="asideAnchor">Settings</li>
+                    <li onclick="showMenu('imprintWrapper', 'imprintChild')" class="asideAnchor">Imprint</li>
+                </ul>
+            </aside>
             <label id="bar" for="myInput">
                 <span class="bar top"></span>
                 <span class="bar middle"></span>
                 <span class="bar bottom"></span>
             </label>
-            <div class="content startScreen">
+            <div id="onlyDesktop" class="content startScreen">
+                <div onclick="startGame()" class="wrapperStartScreen desktop">
+                    <img id="coverImage" src="./img/9_intro_outro_screens/start/startscreen_1.png"
+                        alt="StartGame">
+                    <div class="playButton">
+                        <img src="./img/10_background/play.png"
+                        alt="Play">
+                    </div>
+                </div>
+            </div>
+            <div id="onlyMobile" class="content startScreen d-none">
                 <div class="wrapperStartScreen">
-                    <img onclick="startGame()" id="coverImage" src="./img/9_intro_outro_screens/start/startscreen_1.png"
-                        alt="">
+                    <img id="coverImage" src="./img/9_intro_outro_screens/start/startscreen_1.png"
+                        alt="StartGame">
+                    <div onclick="startGame()" class="playButton">
+                        <img src="./img/10_background/play.png"
+                        alt="Play">
+                    </div>
                 </div>
             </div>
         </section>
+        <div id="controlWrapper" class="menu-wrapper d-none">
+            <div id="controlChild" class="menu d-none">
+                <img class="closeMenue" onclick="closeMenu('controlWrapper')" src="./img/11_icons/close-window-64.png"
+                    alt="">
+                <h1>Control</h1>
+                <div>
+                    <p>Move Left</p>
+                    <img src="./img/11_icons/left-round-64.png" alt="MoveLeft">
+                </div>
+                <div>
+                    <p>Move Right</p>
+                    <img src="./img/11_icons/right-round-64.png" alt="MoveRight">
+                </div>
+                <div>
+                    <p>Jump</p>
+                    <img src="./img/11_icons/myspace-5-64.png" alt="Jump">
+                </div>
+                <div>
+                    <p>Throw Bottle</p>
+                    <p><span>D</span></p>
+                </div>
+            </div>
+        </div>
+        <div id="settingsWrapper" class="menu-wrapper d-none">
+            <div id="settingsChild" class="menu d-none">
+                <img class="closeMenue" onclick="closeMenu('settingsWrapper')" src="./img/11_icons/close-window-64.png"
+                    alt="">
+                <h1>Settings</h1>
+                <div>
+                    <p>Music</p>
+                    <div>
+                        <img id="musicOn" onclick="changeMusic('on')" class="cursor marginRight"
+                            src="./img/11_icons/volume-up-4-64.png" alt="">
+                        <img id="musicOff" onclick="changeMusic('off')" class="cursor opacity"
+                            src="./img/11_icons/mute-2-64_off.png" alt="">
+                    </div>
+                </div>
+                <div>
+                    <p>Volume</p>
+                    <p>
+                        <input oninput="changeVolume(this.value)" type="range" id="volume" name="volume" min="0" max="100"
+                            value="100">
+                    </p>
+                </div>
+                <div>
+                    <p>Screen</p>
+                    <div class="screenMode">
+                        <p id="smallScreen" onclick="changeScreen('small')" class="cursor screenOn">720 x 480</p>
+                        <p id="fullScreen" onclick="changeScreen('full')" class="cursor opacity">Fullscreen</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="imprintWrapper" class="menu-wrapper d-none">
+            <div id="imprintChild" class="menu d-none">
+                <img class="closeMenue" onclick="closeMenu('imprintWrapper')" src="./img/11_icons/close-window-64.png"
+                    alt="">
+                <h1>Imprint</h1>
+                <div class="imprint">
+                    <div>
+                        <p>Vanessa Würdinger</p>
+                        <p>Flößaustraße 122</p>
+                        <p>90763 Fürth</p>
+                    </div>
+                    <div>
+                        <p>E-Mail: vanessa.wuerdinger@gmx.de</p>
+                        <p>Tel.: +49 171 5522270</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
-    <div id="controlWrapper" class="menu-wrapper d-none">
-        <div id="controlChild" class="menu d-none">
-            <img class="closeMenue" onclick="closeMenu('controlWrapper')" src="./img/11_icons/close-window-64.png"
-                alt="">
-            <h1>Control</h1>
-            <div>
-                <p>Move Left</p>
-                <img src="./img/11_icons/left-round-64.png" alt="">
-            </div>
-            <div>
-                <p>Move Right</p>
-                <img src="./img/11_icons/right-round-64.png" alt="">
-            </div>
-            <div>
-                <p>Jump</p>
-                <img src="./img/11_icons/myspace-5-64.png" alt="">
-            </div>
-            <div>
-                <p>Throw Bottle</p>
-                <p><span>D</span></p>
-            </div>
-        </div>
-    </div>
-    <div id="settingsWrapper" class="menu-wrapper d-none">
-        <div id="settingsChild" class="menu d-none">
-            <img class="closeMenue" onclick="closeMenu('settingsWrapper')" src="./img/11_icons/close-window-64.png"
-                alt="">
-            <h1>Settings</h1>
-            <div>
-                <p>Music</p>
-                <div>
-                    <img id="musicOn" onclick="changeMusic('on')" class="cursor marginRight"
-                        src="./img/11_icons/volume-up-4-64.png" alt="">
-                    <img id="musicOff" onclick="changeMusic('off')" class="cursor opacity"
-                        src="./img/11_icons/mute-2-64_off.png" alt="">
-                </div>
-            </div>
-            <div>
-                <p>Volume</p>
-                <p>
-                    <input oninput="changeVolume(this.value)" type="range" id="volume" name="volume" min="0" max="100"
-                        value="100">
-                </p>
-            </div>
-            <div>
-                <p>Screen</p>
-                <div class="screenMode">
-                    <p id="smallScreen" onclick="changeScreen('small')" class="cursor screenOn">720 x 480</p>
-                    <p id="fullScreen" onclick="changeScreen('full')" class="cursor opacity">Fullscreen</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="imprintWrapper" class="menu-wrapper d-none">
-        <div id="imprintChild" class="menu d-none">
-            <img class="closeMenue" onclick="closeMenu('imprintWrapper')" src="./img/11_icons/close-window-64.png"
-                alt="">
-            <h1>Imprint</h1>
-            <div class="imprint">
-                <div>
-                    <p>Vanessa Würdinger</p>
-                    <p>Flößaustraße 122</p>
-                    <p>90763 Fürth</p>
-                </div>
-                <div>
-                    <p>E-Mail: vanessa.wuerdinger@gmx.de</p>
-                    <p>Tel.: +49 171 5522270</p>
-                </div>
-            </div>
-        </div>
-    </div>
     <div id="portraitMode" class="portrait">
         <div>
             <h1>El Pollo Loco</h1>

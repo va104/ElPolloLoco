@@ -34,7 +34,7 @@ class Keyboard {
         document.getElementById('mobileLandscLeft').addEventListener('touchstart', (e) => {
             e.preventDefault();
             this.LEFT = true;
-        })
+        });
     }
 
     touchEndLeft() {

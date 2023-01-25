@@ -274,6 +274,11 @@ function checkMobileOrientation() {
         if (mobileDeviceIsUsed && window.matchMedia("(orientation: portrait)").matches) {
             portraitSight();
         }
+        if (mobileDeviceIsUsed) {
+            onlyDesktop.style.display = 'none'; 
+            onlyMobile.classList.remove('d-none');
+            onlyMobile.style.display = 'flex'; 
+        }
     }, 100)
 }
 
@@ -292,6 +297,7 @@ function checkDesktopOrientation() {
 function landscapeSight() {
     portraitMode.style.display = 'none';
     startScreen.style.display = 'block';
+    startGameScreen.style.display = 'block';
     startGameScreen.style.display = 'block';
 }
 
